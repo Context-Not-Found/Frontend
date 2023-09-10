@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Chat, Heatmap } from '../screens';
 import SOSNavigator from './sosNavigator';
+import Signup from '../screens/auth/signup';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -41,7 +42,7 @@ export default Navigator = () => {
       />
       <Tab.Screen
         name="Heatmap"
-        component={Heatmap}
+        component={Signup}
         options={{
           tabBarIcon: ({ focused, color }) => (
             <Icons
