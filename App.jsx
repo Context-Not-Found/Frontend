@@ -1,15 +1,20 @@
 import { useMaterial3Theme } from '@pchmn/expo-material3-theme';
 import { NavigationContainer } from '@react-navigation/native';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useColorScheme } from 'react-native';
 import { MD3DarkTheme, MD3LightTheme, Provider as PaperProvider } from 'react-native-paper';
 import Navigator from './src/navigation';
 // import { Provider as StoreProvider } from 'react-redux';
 // import store from './src/store/store';
+import { requestForegroundPermissionsAsync } from 'expo-location';
 
 export default function App() {
   const colorScheme = useColorScheme();
   const { theme } = useMaterial3Theme();
+
+  useEffect(() => {
+    (async () => await requestForegroundPermissionsAsync())();
+  }, []);
 
   const paperTheme = useMemo(
     () =>
