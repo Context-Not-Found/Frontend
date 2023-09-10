@@ -27,7 +27,14 @@ const Login = () => {
         onChangeText={(text) => setPassword(text)}
         style={styles.input}
         mode="outlined"
-        secureTextEntry
+        secureTextEntry={secureTextEntry}
+        right={
+          <TextInput.Icon
+            name={secureTextEntry ? 'eye-off' : 'eye'}
+            onPress={toggleSecureEntry}
+            forceTextInputFocus={false}
+          />
+        }
       />
       <Button mode="contained" onPress={handleLogin} style={styles.button}>
         Login
