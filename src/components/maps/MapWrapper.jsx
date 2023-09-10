@@ -1,8 +1,6 @@
-import React from 'react';
-import { View } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView from 'react-native-maps';
 
-const Live = () => {
+const MapWrapper = ({ children }) => {
   const topLeft = { latitude: 28.799824849803834, longitude: 77.5366675332206 };
   const bottomRight = { latitude: 28.79478538122577, longitude: 77.54283661378919 };
 
@@ -14,13 +12,17 @@ const Live = () => {
   };
 
   return (
-    <View>
-      <MapView style={styles.map} region={region} mapType="satellite">
-        <Marker coordinate={topLeft} title="Top Left" />
-        <Marker coordinate={bottomRight} title="Bottom Right" />
-      </MapView>
-    </View>
+    <MapView
+      style={{
+        height: '100%',
+        width: '100%'
+      }}
+      region={region}
+      mapType="satellite"
+    >
+      {children}
+    </MapView>
   );
 };
 
-export default Live;
+export default MapWrapper;
