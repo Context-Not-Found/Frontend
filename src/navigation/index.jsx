@@ -2,7 +2,8 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Chat, Heatmap, SOS } from '../screens';
+import { Chat, Heatmap } from '../screens';
+import SOSNavigator from './sosNavigator';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -25,8 +26,8 @@ export default Navigator = () => {
         }}
       />
       <Tab.Screen
-        name="SOS"
-        component={SOS}
+        name="SOSNavigator"
+        component={SOSNavigator}
         options={{
           tabBarIcon: ({ focused, color }) => (
             <Icons

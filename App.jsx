@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useMemo } from 'react';
 import { useColorScheme } from 'react-native';
 import { MD3DarkTheme, MD3LightTheme, Provider as PaperProvider } from 'react-native-paper';
-import Navigator from './src/navigation/navigator';
+import Navigator from './src/navigation';
 // import { Provider as StoreProvider } from 'react-redux';
 // import store from './src/store/store';
 
