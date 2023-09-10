@@ -4,12 +4,13 @@ import { createContext, useContext, useState } from 'react';
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState('cc');
+  const [user, setUser] = useState('');
   const { navigate } = useNavigation();
+
   const login = async (userDetails) => {
     console.log(userDetails);
 
-    setTimeout(() => navigate('Home'), 2000);
+    setTimeout(() => setUser('test'), 2000);
   };
 
   const signUp = async (userDetails) => {

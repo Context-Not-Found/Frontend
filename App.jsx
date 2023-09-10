@@ -1,12 +1,13 @@
 import { useMaterial3Theme } from '@pchmn/expo-material3-theme';
-import { NavigationContainer } from '@react-navigation/native';
 import { useEffect, useMemo } from 'react';
 import { useColorScheme } from 'react-native';
 import { MD3DarkTheme, MD3LightTheme, Provider as PaperProvider } from 'react-native-paper';
 import Navigator from './src/navigation';
 // import { Provider as StoreProvider } from 'react-redux';
 // import store from './src/store/store';
+import { NavigationContainer } from '@react-navigation/native';
 import { requestForegroundPermissionsAsync } from 'expo-location';
+import { AuthProvider } from './src/context/AuthProvider';
 
 export default function App() {
   const colorScheme = useColorScheme();
@@ -28,7 +29,9 @@ export default function App() {
     // <StoreProvider store={store}>
     <PaperProvider theme={paperTheme}>
       <NavigationContainer>
-        <Navigator />
+        <AuthProvider>
+          <Navigator />
+        </AuthProvider>
       </NavigationContainer>
     </PaperProvider>
     // </StoreProvider>
