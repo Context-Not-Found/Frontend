@@ -29,6 +29,7 @@ export default Navigator = () => {
         name="SOSNavigator"
         component={SOSNavigator}
         options={{
+          title: 'SOS',
           tabBarIcon: ({ focused, color }) => (
             <Icons
               name={focused ? 'alert-octagram' : 'alert-octagram-outline'}
