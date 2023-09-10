@@ -4,6 +4,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Chat, Heatmap } from '../screens';
 import SOSNavigator from './sosNavigator';
+import Signup from '../screens/auth/signup';
+import Login from '../screens/auth/login';
 
 const Tab = createMaterialBottomTabNavigator();
 
