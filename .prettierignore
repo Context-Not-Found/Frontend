@@ -1,0 +1,18 @@
+# dependencies
+/node_modules
+/.vscode
+
+# next.js
+.expo
+/android
+/ios
+
+
+# production
+/build
+/dist
+
+# lock files
+./package-lock.json
+yarn.lock
+babel.config.js
