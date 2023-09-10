@@ -1,20 +1,34 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { TextInput, Button, Title } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
+import { Button, HelperText, Text, TextInput } from 'react-native-paper';
+import { useAuth } from '../../context/AuthProvider';
 
 const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [error, setError] = useState('');
 
-  const handleSignup = () => {
-    console.log(`${name} ${email} ${password} ${phoneNumber}`);
+  const { navigate } = useNavigation();
+  const { signUp } = useAuth();
+
+  const handleSignup = async () => {
+    if (!email || !password || !phoneNumber || !name) {
+      setError('Please fill in the details.');
+      return;
+    }
+    await signUp({ email, password, name, phoneNumber });
+    setError('');
   };
 
   return (
     <View style={styles.container}>
-      <Title style={styles.title}>Signup</Title>
+      <Text variant="displaySmall" style={styles.title}>
+        Register New User
+      </Text>
       <TextInput
         label="Name"
         value={name}
@@ -39,8 +53,8 @@ const Signup = () => {
         secureTextEntry={secureTextEntry}
         right={
           <TextInput.Icon
-            name={secureTextEntry ? 'eye-off' : 'eye'}
-            onPress={toggleSecureEntry}
+            icon={secureTextEntry ? 'eye-off' : 'eye'}
+            onPress={() => setSecureTextEntry(!secureTextEntry)}
             forceTextInputFocus={false}
           />
         }
@@ -53,20 +67,27 @@ const Signup = () => {
         mode="outlined"
         keyboardType="numeric"
       />
+      <HelperText visible={error} type="error" style={styles.helperTxt}>
+        {error}
+      </HelperText>
       <Button mode="contained" onPress={handleSignup} style={styles.button}>
         Signup
+      </Button>
+
+      <Button mode="text" onPress={() => navigate('Login')}>
+        Already have a account! Login
       </Button>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', padding: 16 },
-  title: { textAlign: 'center', marginBottom: 20 },
+  container: { flex: 1, justifyContent: 'center', marginHorizontal: 20 },
+  title: { textAlign: 'center', marginBottom: 20, fontWeight: '700' },
   input: { marginBottom: 20 },
-  button: {
-    marginTop: 10
-  }
+  button: { paddingVertical: 5 },
+  btnContent: { fontSize: 18 },
+  helperTxt: { textAlign: 'center', fontSize: 15 }
 });
 
 export default Signup;
