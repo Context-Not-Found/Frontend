@@ -5,6 +5,7 @@ import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Chat, Heatmap } from '../screens';
 import SOSNavigator from './sosNavigator';
 import Signup from '../screens/auth/signup';
+import Login from '../screens/auth/login';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -42,7 +43,7 @@ export default Navigator = () => {
       />
       <Tab.Screen
         name="Heatmap"
-        component={Signup}
+        component={Heatmap}
         options={{
           tabBarIcon: ({ focused, color }) => (
             <Icons

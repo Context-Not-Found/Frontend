@@ -8,6 +8,10 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
+  const handleSignup = () => {
+    console.log(`${name} ${email} ${password} ${phoneNumber}`);
+  };
+
   return (
     <View style={styles.container}>
       <Title style={styles.title}>Signup</Title>
@@ -42,13 +46,20 @@ const Signup = () => {
         mode="outlined"
         keyboardType="numeric"
       />
-      <Button mode="contained" style={styles.button}>
+      <Button mode="contained" onPress={handleSignup} style={styles.button}>
         Signup
       </Button>
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'center', padding: 16 },
+  title: { textAlign: 'center', marginBottom: 20 },
+  input: { marginBottom: 20 },
+  button: {
+    marginTop: 10
+  }
+});
 
 export default Signup;
