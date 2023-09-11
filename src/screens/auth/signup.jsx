@@ -8,6 +8,7 @@ const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [error, setError] = useState('');
@@ -20,6 +21,12 @@ const Signup = () => {
       setError('Please fill in the details.');
       return;
     }
+    
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
     await signUp({ email, password, name, phoneNumber });
     setError('');
   };
@@ -60,6 +67,21 @@ const Signup = () => {
         }
       />
       <TextInput
+        label="Confirm Password"
+        value={confirmPassword}
+        onChangeText={(text) => setConfirmPassword(text)}
+        style={styles.input}
+        mode="outlined"
+        secureTextEntry={secureTextEntry}
+        right={
+          <TextInput.Icon
+            icon={secureTextEntry ? 'eye-off' : 'eye'}
+            onPress={() => setSecureTextEntry(!secureTextEntry)}
+            forceTextInputFocus={false}
+          />
+        }
+      />
+      <TextInput
         label="Phone Number"
         value={phoneNumber}
         onChangeText={(text) => setPhoneNumber(text)}
@@ -71,11 +93,11 @@ const Signup = () => {
         {error}
       </HelperText>
       <Button mode="contained" onPress={handleSignup} style={styles.button}>
-        Signup
+        Sign Up
       </Button>
 
       <Button mode="text" onPress={() => navigate('Login')}>
-        Already have a account! Login
+        Already have an account? Login here
       </Button>
     </View>
   );

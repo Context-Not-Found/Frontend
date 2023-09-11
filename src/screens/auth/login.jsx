@@ -63,7 +63,7 @@ const Login = () => {
       </Button>
 
       <Button mode="text" onPress={() => navigate('SignUp')}>
-        New Student? Register
+        Dont have an account? Sign Up
       </Button>
     </View>
   );
