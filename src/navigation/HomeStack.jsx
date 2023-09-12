@@ -7,7 +7,7 @@ import SOSNavigator from './sosNavigator';
 
 const Tab = createMaterialBottomTabNavigator();
 
-export default HomeStack = () => {
+const HomeStack = () => {
   const { bottom } = useSafeAreaInsets();
 
   return (
@@ -55,3 +55,5 @@ export default HomeStack = () => {
     </Tab.Navigator>
   );
 };
+
+export default HomeStack;

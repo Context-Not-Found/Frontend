@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (userDetails) => {
     console.log(userDetails);
 
-    setTimeout(() => setUser('test'), 2000);
+    setTimeout(() => setUser({ id: 1, name: 'test' }), 2000);
   };
 
   const signUp = async (userDetails) => {

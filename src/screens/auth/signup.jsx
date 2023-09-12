@@ -21,7 +21,7 @@ const Signup = () => {
       setError('Please fill in the details.');
       return;
     }
-    
+
     if (password !== confirmPassword) {
       setError('Passwords do not match.');
       return;

@@ -17,7 +17,8 @@ const SOS = () => {
       let { status } = await Location.getForegroundPermissionsAsync();
 
       if (status !== 'granted') {
-        setHelpText('Permission to access location was denied');
+        setHelpText('Please allow the location permissions.');
+        setBanner(true);
         return;
       }
 
