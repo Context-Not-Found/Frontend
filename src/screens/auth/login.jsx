@@ -2,24 +2,28 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, HelperText, Text, TextInput } from 'react-native-paper';
-import { useAuth } from '../../context/AuthProvider';
+import { useUserStore } from '../../store';
 
 const Login = () => {
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-
   const { navigate } = useNavigation();
-  const { login } = useAuth();
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [userData, setUserData] = useState({ email: null, password: null });
+  const { error, setError, loginUser, setLoading, isLoading } = useUserStore();
 
   const handleLogin = async () => {
-    if (!email || !password) {
+    if (!userData.email || !userData.password) {
       setError('Please fill in the details.');
       return;
     }
-    await login({ email, password });
-    setError('');
+
+    setError(null);
+    setLoading(true);
+
+    try {
+      await loginUser(userData);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -29,17 +33,15 @@ const Login = () => {
       </Text>
       <TextInput
         label="Email"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-        style={styles.input}
+        value={userData.email}
+        onChangeText={(email) => setUserData({ ...userData, email })}
         mode="outlined"
         keyboardType="email-address"
       />
       <TextInput
         label="Password"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        style={styles.input}
+        value={userData.password}
+        onChangeText={(password) => setUserData({ ...userData, password })}
         mode="outlined"
         secureTextEntry={secureTextEntry}
         right={
@@ -55,13 +57,13 @@ const Login = () => {
       </HelperText>
       <Button
         mode="contained"
+        loading={isLoading}
         labelStyle={styles.btnContent}
         onPress={handleLogin}
         style={styles.button}
       >
-        Login
+        {isLoading ? '' : 'Login'}
       </Button>
-
       <Button mode="text" onPress={() => navigate('SignUp')}>
         Dont have an account? Sign Up
       </Button>
@@ -70,16 +72,10 @@ const Login = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', marginHorizontal: 20 },
+  container: { flex: 1, justifyContent: 'center', marginHorizontal: 20, gap: 10 },
   title: { textAlign: 'center', marginBottom: 20, fontWeight: '700' },
-  input: { marginBottom: 20 },
-  button: {
-    marginTop: 10,
-    paddingVertical: 5
-  },
-  btnContent: {
-    fontSize: 18
-  },
+  button: { paddingVertical: 5 },
+  btnContent: { fontSize: 18 },
   helperTxt: { textAlign: 'center', fontSize: 15 }
 });
 

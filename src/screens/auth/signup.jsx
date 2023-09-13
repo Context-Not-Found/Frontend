@@ -2,33 +2,39 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, HelperText, Text, TextInput } from 'react-native-paper';
-import { useAuth } from '../../context/AuthProvider';
+import { useUserStore } from '../../store';
 
 const Signup = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [userData, setUserData] = useState({
+    name: null,
+    email: null,
+    password: null,
+    phone_number: null
+  });
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [error, setError] = useState('');
+
+  const { error, setError, signUpUser, isLoading, setLoading } = useUserStore();
 
   const { navigate } = useNavigation();
-  const { signUp } = useAuth();
 
   const handleSignup = async () => {
-    if (!email || !password || !phoneNumber || !name) {
+    if (!userData.email || !userData.password || !userData.phone_number || !userData.name) {
       setError('Please fill in the details.');
       return;
     }
 
-    if (password !== confirmPassword) {
+    if (userData.password !== confirmPassword) {
       setError('Passwords do not match.');
       return;
     }
-
-    await signUp({ email, password, name, phoneNumber });
-    setError('');
+    setError(null);
+    setLoading(true);
+    try {
+      await signUpUser(userData);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -38,24 +44,21 @@ const Signup = () => {
       </Text>
       <TextInput
         label="Name"
-        value={name}
-        onChangeText={(text) => setName(text)}
-        style={styles.input}
+        value={userData.name}
+        onChangeText={(name) => setUserData({ ...userData, name })}
         mode="outlined"
       />
       <TextInput
         label="Email"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-        style={styles.input}
+        value={userData.email}
+        onChangeText={(email) => setUserData({ ...userData, email })}
         mode="outlined"
         keyboardType="email-address"
       />
       <TextInput
         label="Password"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        style={styles.input}
+        value={userData.password}
+        onChangeText={(password) => setUserData({ ...userData, password })}
         mode="outlined"
         secureTextEntry={secureTextEntry}
         right={
@@ -70,30 +73,20 @@ const Signup = () => {
         label="Confirm Password"
         value={confirmPassword}
         onChangeText={(text) => setConfirmPassword(text)}
-        style={styles.input}
         mode="outlined"
-        secureTextEntry={secureTextEntry}
-        right={
-          <TextInput.Icon
-            icon={secureTextEntry ? 'eye-off' : 'eye'}
-            onPress={() => setSecureTextEntry(!secureTextEntry)}
-            forceTextInputFocus={false}
-          />
-        }
       />
       <TextInput
         label="Phone Number"
-        value={phoneNumber}
-        onChangeText={(text) => setPhoneNumber(text)}
-        style={styles.input}
+        value={userData.phone_number}
+        onChangeText={(phone_number) => setUserData({ ...userData, phone_number })}
         mode="outlined"
         keyboardType="numeric"
       />
       <HelperText visible={error} type="error" style={styles.helperTxt}>
         {error}
       </HelperText>
-      <Button mode="contained" onPress={handleSignup} style={styles.button}>
-        Sign Up
+      <Button mode="contained" loading={isLoading} onPress={handleSignup} style={styles.button}>
+        {isLoading ? '' : 'Sign Up'}
       </Button>
 
       <Button mode="text" onPress={() => navigate('Login')}>
@@ -104,9 +97,8 @@ const Signup = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', marginHorizontal: 20 },
+  container: { flex: 1, justifyContent: 'center', marginHorizontal: 20, gap: 10 },
   title: { textAlign: 'center', marginBottom: 20, fontWeight: '700' },
-  input: { marginBottom: 20 },
   button: { paddingVertical: 5 },
   btnContent: { fontSize: 18 },
   helperTxt: { textAlign: 'center', fontSize: 15 }

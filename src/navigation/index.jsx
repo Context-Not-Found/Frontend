@@ -1,9 +1,9 @@
-import { useAuth } from '../context/AuthProvider';
+import { useUserStore } from '../store';
 import AuthStack from './AuthStack';
 import HomeStack from './HomeStack';
 
 const Navigator = () => {
-  const { user } = useAuth();
+  const { user } = useUserStore();
 
   return <>{user ? <HomeStack /> : <AuthStack />}</>;
 };
