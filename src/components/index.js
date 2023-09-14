@@ -2,6 +2,7 @@
 export { default as HelpBot } from './chat/bot';
 export { default as Community } from './chat/community';
 export { default as Tickets } from './chat/tickets';
+export { default as Loading } from './loading';
 export { default as MapWrapper } from './maps/MapWrapper';
 export { default as SosBanner } from './sos/Banner';
 export { default as DetailsBox } from './sos/DetailsBox';

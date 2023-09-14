@@ -11,20 +11,7 @@ const HomeStack = () => {
   const { bottom } = useSafeAreaInsets();
 
   return (
-    <Tab.Navigator initialRouteName="Chat" labeled={true} safeAreaInsets={{ bottom }}>
-      <Tab.Screen
-        name="Chat"
-        component={Chat}
-        options={{
-          tabBarIcon: ({ focused, color }) => (
-            <Icons
-              name={focused ? 'account-group' : 'account-group-outline'}
-              size={25}
-              color={color}
-            />
-          )
-        }}
-      />
+    <Tab.Navigator initialRouteName="SOSNavigator" labeled={true} safeAreaInsets={{ bottom }}>
       <Tab.Screen
         name="SOSNavigator"
         component={SOSNavigator}
@@ -33,6 +20,19 @@ const HomeStack = () => {
           tabBarIcon: ({ focused, color }) => (
             <Icons
               name={focused ? 'alert-octagram' : 'alert-octagram-outline'}
+              size={25}
+              color={color}
+            />
+          )
+        }}
+      />
+      <Tab.Screen
+        name="Chat"
+        component={Chat}
+        options={{
+          tabBarIcon: ({ focused, color }) => (
+            <Icons
+              name={focused ? 'account-group' : 'account-group-outline'}
               size={25}
               color={color}
             />
