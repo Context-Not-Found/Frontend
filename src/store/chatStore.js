@@ -14,7 +14,8 @@ export const useCommunityStore = create((set) => ({
       createdAt: msg.created_at,
       text: msg.message_text,
       user: {
-        _id: msg.user_id
+        _id: Number(msg.user_id),
+        name: `User ${msg.user_id}`
       }
     };
 
@@ -26,13 +27,14 @@ export const useCommunityStore = create((set) => ({
   fetchMessages: async () => {
     try {
       const { data } = await axios.get('/community_chat/messages/');
-      console.log('fetching');
+
       const groupMessages = data.map((message) => ({
         _id: message.message_id,
         createdAt: message.created_at,
         text: message.message_text,
         user: {
-          _id: message.user_id
+          _id: message.user_id,
+          name: `User ${message.user_id}`
         }
       }));
 

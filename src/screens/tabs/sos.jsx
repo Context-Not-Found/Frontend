@@ -3,6 +3,7 @@ import * as Location from 'expo-location';
 import React, { useEffect, useState } from 'react';
 import { Appbar } from 'react-native-paper';
 import { DetailsBox, SosBanner, SosButton } from '../../components';
+import { useCommunityStore } from '../../store';
 
 const SOS = () => {
   const { navigate } = useNavigation();
@@ -11,6 +12,7 @@ const SOS = () => {
   const [helpText, setHelpText] = useState(null);
   const [banner, setBanner] = useState(false);
   const [isSosOn, setIsSosOn] = useState(false);
+  const { fetchMessages } = useCommunityStore();
 
   useEffect(() => {
     (async () => {
@@ -24,6 +26,9 @@ const SOS = () => {
 
       setLocation(await Location.getCurrentPositionAsync({}));
     })();
+
+    // prefetching messages
+    fetchMessages();
   }, []);
 
   const handleSosBtn = () => {

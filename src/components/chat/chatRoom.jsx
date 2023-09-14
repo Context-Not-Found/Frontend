@@ -1,25 +1,21 @@
 import { View } from 'react-native';
 import { Bubble, GiftedChat, Send } from 'react-native-gifted-chat';
 import { IconButton, useTheme } from 'react-native-paper';
-import { useUserStore } from '../../store/userStore';
 
-const ChatRoom = ({ messages, onSend }) => {
+const ChatRoom = ({ messages, onSend, user }) => {
   const { colors } = useTheme();
-  const {
-    user: { user_id }
-  } = useUserStore();
 
   function renderBubble(props) {
     return (
       <Bubble
         {...props}
+        containerStyle={{
+          left: { marginBottom: 5 },
+          right: { marginBottom: 5 }
+        }}
         wrapperStyle={{
-          left: {
-            backgroundColor: colors.primaryContainer
-          },
-          right: {
-            backgroundColor: colors.primary
-          }
+          left: { backgroundColor: colors.primaryContainer },
+          right: { backgroundColor: colors.primary }
         }}
       />
     );
@@ -39,9 +35,11 @@ const ChatRoom = ({ messages, onSend }) => {
     <GiftedChat
       messages={messages}
       onSend={onSend}
-      user={{ _id: user_id }}
+      user={{ _id: user, name: `User ${user}` }}
       placeholder="Type your message here..."
       alwaysShowSend
+      scrollToBottom={true}
+      alignTop
       inverted={false}
       renderBubble={renderBubble}
       renderSend={renderSend}
