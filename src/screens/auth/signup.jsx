@@ -6,44 +6,54 @@ import { useUserStore } from '../../store';
 
 const Signup = () => {
   const [userData, setUserData] = useState({
-    name: null,
-    email: null,
-    password: null,
-    phone_number: null
+    name: '',
+    email: '',
+    password: '',
+    phone_number: ''
   });
   const [confirmPassword, setConfirmPassword] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
-  const emailRegex = /^[a-zA-Z]{2}\d{4}@srmist\.edu\.in$/;
-  const passwordRegex = /^.{8,}$/;
-   
+  const regex = {
+    email: /^[a-zA-Z]{2}\d{4}$/,
+    phone: /^[0-9]{10}$/
+  };
+
   const { error, setError, signUpUser, isLoading, setLoading } = useUserStore();
 
   const { navigate } = useNavigation();
 
   const handleSignup = async () => {
     if (!userData.email || !userData.password || !userData.phone_number || !userData.name) {
-      setError('Please fill in the details.');
+      setError('Please fill in all the details.');
       return;
     }
 
-    if (!emailRegex.test(userData.email)) {
-      setError('Invalid email format , please use your official Id');
+    if (!regex.email.test(userData.email)) {
+      setError('Invalid email format, please use your official ID.');
       return;
     }
 
-    if (!passwordRegex.test(userData.password)) {
-      setError('Password should be atleast 8 characters');
+    if (!regex.phone.test(userData.phone_number)) {
+      setError('Invalid phone number format (10 digits).');
       return;
     }
+
     if (userData.password !== confirmPassword) {
       setError('Passwords do not match.');
       return;
     }
+
+    if (userData.password.length < 8) {
+      setError('Password should be at least 8 characters.');
+      return;
+    }
+
     setError(null);
     setLoading(true);
+
     try {
-      await signUpUser(userData);
+      await signUpUser({ ...userData, email: userData.email.toLowerCase() + '@srmist.edu.in' });
     } finally {
       setLoading(false);
     }
@@ -60,40 +70,53 @@ const Signup = () => {
         onChangeText={(name) => setUserData({ ...userData, name })}
         mode="outlined"
       />
-      <TextInput
-        label="Email"
-        value={userData.email}
-        onChangeText={(email) => setUserData({ ...userData, email })}
-        mode="outlined"
-        keyboardType="email-address"
-      />
-      <TextInput
-        label="Password"
-        value={userData.password}
-        onChangeText={(password) => setUserData({ ...userData, password })}
-        mode="outlined"
-        secureTextEntry={secureTextEntry}
-        right={
-          <TextInput.Icon
-            icon={secureTextEntry ? 'eye-off' : 'eye'}
-            onPress={() => setSecureTextEntry(!secureTextEntry)}
-            forceTextInputFocus={false}
-          />
-        }
-      />
+      <View>
+        <TextInput
+          label="Email"
+          value={userData.email}
+          onChangeText={(email) => setUserData({ ...userData, email })}
+          mode="outlined"
+          right={<TextInput.Affix text="@srmist.edu.in" />}
+          keyboardType="email-address"
+        />
+        <HelperText type="info">
+          Please use your official ID {"'"}eg: ab1234{"'"} (without @srmist.edu.in)
+        </HelperText>
+      </View>
+      <View>
+        <TextInput
+          label="Password"
+          value={userData.password}
+          onChangeText={(password) => setUserData({ ...userData, password })}
+          mode="outlined"
+          secureTextEntry={secureTextEntry}
+          right={
+            <TextInput.Icon
+              icon={secureTextEntry ? 'eye-off' : 'eye'}
+              onPress={() => setSecureTextEntry(!secureTextEntry)}
+              forceTextInputFocus={false}
+            />
+          }
+        />
+        <HelperText type="info">Password should be at least 8 characters.</HelperText>
+      </View>
+
       <TextInput
         label="Confirm Password"
         value={confirmPassword}
         onChangeText={(text) => setConfirmPassword(text)}
         mode="outlined"
       />
-      <TextInput
-        label="Phone Number"
-        value={userData.phone_number}
-        onChangeText={(phone_number) => setUserData({ ...userData, phone_number })}
-        mode="outlined"
-        keyboardType="numeric"
-      />
+      <View>
+        <TextInput
+          label="Phone Number"
+          value={userData.phone_number}
+          onChangeText={(phone_number) => setUserData({ ...userData, phone_number })}
+          mode="outlined"
+          keyboardType="numeric"
+        />
+        <HelperText type="info">Password should be at least 8 characters.</HelperText>
+      </View>
       <HelperText visible={error} type="error" style={styles.helperTxt}>
         {error}
       </HelperText>
