@@ -1,8 +1,6 @@
-import axios from 'axios';
 import { create } from 'zustand';
+import { axios_ as axios } from './axios';
 import { useUserStore } from './userStore';
-
-axios.defaults.baseURL = 'https://womenprotection.onrender.com';
 
 export const useTicketStore = create((set) => ({
   // states
@@ -10,6 +8,22 @@ export const useTicketStore = create((set) => ({
   messages: [],
 
   // Actions
+  setMessage: (msg) => {
+    const message = {
+      _id: msg.message_id,
+      createdAt: msg.created_at,
+      text: msg.message_text,
+      user: {
+        _id: Number(msg.user_id),
+        name: `User ${msg.user_id}`
+      }
+    };
+
+    set((state) => ({
+      messages: [...state.messages, message]
+    }));
+  },
+
   createTicket: async () => {
     const {
       user: { user_id }
@@ -41,15 +55,6 @@ export const useTicketStore = create((set) => ({
     }
   },
 
-  getTicketMessages: async (ticketId) => {
-    try {
-      const { data } = await axios.get(`/tickets/messages/${ticketId}`);
-      set({ messages: data });
-    } catch (error) {
-      console.error(`Error fetching ticket messages for ticket ${ticketId}: ${error.message}`);
-    }
-  },
-
   getOpenTickets: async () => {
     const {
       user: { user_id }
@@ -64,6 +69,26 @@ export const useTicketStore = create((set) => ({
       }
     } catch (error) {
       console.error(`Error fetching tickets: ${error.message}`);
+    }
+  },
+
+  getTicketMessages: async (ticketId) => {
+    try {
+      const { data } = await axios.get(`/tickets/messages/${ticketId}`);
+
+      const messages = data.map((message) => ({
+        _id: message.message_id,
+        createdAt: message.created_at,
+        text: message.message_text,
+        user: {
+          _id: message.user_id,
+          name: `User ${message.user_id}`
+        }
+      }));
+
+      set({ messages });
+    } catch (error) {
+      console.error(`Error fetching ticket messages for ticket ${ticketId}: ${error.message}`);
     }
   }
 }));

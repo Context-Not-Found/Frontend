@@ -1,7 +1,5 @@
-import axios from 'axios';
 import { create } from 'zustand';
-
-axios.defaults.baseURL = 'https://womenprotection.onrender.com';
+import { axios_ as axios } from './axios';
 
 export const useCommunityStore = create((set) => ({
   // states
@@ -44,4 +42,3 @@ export const useCommunityStore = create((set) => ({
     }
   }
 }));
-``

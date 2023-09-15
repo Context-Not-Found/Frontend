@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
 import { FlatList, View } from 'react-native';
 import { FAB, IconButton, List, Text, TouchableRipple, useTheme } from 'react-native-paper';
-import { useTicketStore } from '../../../store';
+import { useTicketStore } from '../../../../store';
 
 const Tickets = () => {
   const { tickets, closeTicket, getOpenTickets } = useTicketStore();
@@ -14,10 +14,10 @@ const Tickets = () => {
 
   const TicketItem = ({ ticket }) => {
     const { colors } = useTheme();
-    const { ticket_id } = ticket;
+    const { ticket_id, user_id } = ticket;
 
     return (
-      <TouchableRipple onPress={() => console.log('route to ticket chat')}>
+      <TouchableRipple onPress={() => navigate('TicketChatRoom', { ticket_id, user_id })}>
         <List.Item
           titleStyle={{
             fontSize: 20
