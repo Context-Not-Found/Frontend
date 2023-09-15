@@ -10,22 +10,28 @@ const Login = () => {
   const [userData, setUserData] = useState({ email: null, password: null });
   const { error, setError, loginUser, setLoading, isLoading } = useUserStore();
 
-  const emailRegex = /^[a-zA-Z]{2}\d{4}@srmist\.edu\.in$/;
+  const emailRegex = /^[a-zA-Z]{2}\d{4}$/;
 
   const handleLogin = async () => {
     if (!userData.email || !userData.password) {
       setError('Please fill in the details.');
       return;
     }
-
     if (!emailRegex.test(userData.email)) {
       setError('Invalid email, Please use your official email id');
+      return;
     }
+
+    if (userData.password.length < 8) {
+      setError('Password should be at least 8 characters.');
+      return;
+    }
+
     setError(null);
     setLoading(true);
 
     try {
-      await loginUser(userData);
+      await loginUser({ ...userData, email: userData.email.toLowerCase() + '@srmist.edu.in' });
     } finally {
       setLoading(false);
     }
@@ -36,27 +42,37 @@ const Login = () => {
       <Text variant="displaySmall" style={styles.title}>
         Welcome to the App
       </Text>
-      <TextInput
-        label="Email"
-        value={userData.email}
-        onChangeText={(email) => setUserData({ ...userData, email })}
-        mode="outlined"
-        keyboardType="email-address"
-      />
-      <TextInput
-        label="Password"
-        value={userData.password}
-        onChangeText={(password) => setUserData({ ...userData, password })}
-        mode="outlined"
-        secureTextEntry={secureTextEntry}
-        right={
-          <TextInput.Icon
-            icon={secureTextEntry ? 'eye-off' : 'eye'}
-            forceTextInputFocus={false}
-            onPress={() => setSecureTextEntry(!secureTextEntry)}
-          />
-        }
-      />
+      <View>
+        <TextInput
+          label="Email"
+          value={userData.email}
+          onChangeText={(email) => setUserData({ ...userData, email })}
+          mode="outlined"
+          right={<TextInput.Affix text="@srmist.edu.in" />}
+          keyboardType="email-address"
+        />
+        <HelperText type="info">
+          Please use your official ID {"'"}eg: ab1234{"'"} (without @srmist.edu.in)
+        </HelperText>
+      </View>
+      <View>
+        <TextInput
+          label="Password"
+          value={userData.password}
+          onChangeText={(password) => setUserData({ ...userData, password })}
+          mode="outlined"
+          secureTextEntry={secureTextEntry}
+          right={
+            <TextInput.Icon
+              icon={secureTextEntry ? 'eye-off' : 'eye'}
+              forceTextInputFocus={false}
+              onPress={() => setSecureTextEntry(!secureTextEntry)}
+            />
+          }
+        />
+        <HelperText type="info">Password should be at least 8 characters.</HelperText>
+      </View>
+
       <HelperText visible={error} type="error" style={styles.helperTxt}>
         {error}
       </HelperText>
