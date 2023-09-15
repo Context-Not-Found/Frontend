@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
 import { View } from 'react-native';
 import { Marker } from 'react-native-maps';
 import { Appbar, Button, Card, Text } from 'react-native-paper';

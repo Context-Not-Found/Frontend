@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
+import { Marker } from 'react-native-maps';
 import { Button, SegmentedButtons, Snackbar, Text, TextInput } from 'react-native-paper';
 import { useTicketStore } from '../../store';
 import MapWrapper from '../maps/MapWrapper';
@@ -9,11 +10,14 @@ const ReportForms = () => {
   const { navigate } = useNavigation();
   const { createTicket } = useTicketStore();
   const [visible, setVisible] = useState(false);
+  const [reportFor, setReportFor] = useState(false);
+
   const [formData, setFormData] = useState({
     rating: 0,
-    for: 0,
-    type: 0,
-    message: null
+    is_anonymous: 0,
+    report_content: null,
+    lat: 28.797305115514803,
+    long: 77.5397520735049
   });
   const { width } = Dimensions.get('window');
 
@@ -22,11 +26,11 @@ const ReportForms = () => {
       <View>
         <Text style={styles.label}>Report For</Text>
         <SegmentedButtons
-          value={formData.for}
-          onValueChange={(data) => {
-            setFormData({ ...formData, for: data });
+          value={reportFor}
+          onValueChange={(reportFor) => {
+            setReportFor(reportFor);
 
-            if (data === 1) {
+            if (reportFor) {
               setVisible(true);
 
               setTimeout(() => {
@@ -36,12 +40,12 @@ const ReportForms = () => {
           }}
           buttons={[
             {
-              value: 0,
+              value: false,
               label: 'Self',
               showSelectedCheck: true
             },
             {
-              value: 1,
+              value: true,
               label: 'Other',
               showSelectedCheck: true
             }
@@ -49,12 +53,12 @@ const ReportForms = () => {
         />
       </View>
 
-      {!formData.for && (
+      {!reportFor && (
         <View>
           <Text style={styles.label}>Report As</Text>
           <SegmentedButtons
-            value={formData.type}
-            onValueChange={(type) => setFormData({ ...formData, type })}
+            value={formData.is_anonymous}
+            onValueChange={(is_anonymous) => setFormData({ ...formData, is_anonymous })}
             buttons={[
               {
                 value: 0,
@@ -72,9 +76,23 @@ const ReportForms = () => {
       )}
 
       <View>
-        <Text style={styles.label}>Location</Text>
+        <Text style={styles.label}>
+          Location <Text> (Hold the marker to set location)</Text>
+        </Text>
         <View style={{ width: width - 40, aspectRatio: 1 }}>
-          <MapWrapper></MapWrapper>
+          <MapWrapper>
+            <Marker
+              draggable
+              coordinate={{ latitude: formData.lat, longitude: formData.long }}
+              onDragEnd={(e) =>
+                setFormData({
+                  ...formData,
+                  lat: e.nativeEvent.coordinate.latitude,
+                  long: e.nativeEvent.coordinate.longitude
+                })
+              }
+            />
+          </MapWrapper>
         </View>
       </View>
 
@@ -94,15 +112,15 @@ const ReportForms = () => {
       </View>
 
       <View>
-        <Text style={styles.label}>Label</Text>
+        <Text style={styles.label}>Report</Text>
         <TextInput
           label="Report your incident here"
           multiline
           mode="outlined"
           numberOfLines={4}
           outlineStyle={{ borderRadius: 10 }}
-          value={formData.message}
-          onChangeText={(message) => setFormData({ ...formData, message })}
+          value={formData.report_content}
+          onChangeText={(report_content) => setFormData({ ...formData, report_content })}
         />
       </View>
 
@@ -110,7 +128,8 @@ const ReportForms = () => {
         mode="contained"
         onPress={async () => {
           try {
-            await createTicket();
+            await createTicket(formData);
+            console.log(formData);
           } finally {
             navigate('TicketList');
           }
@@ -118,8 +137,8 @@ const ReportForms = () => {
       >
         Submit
       </Button>
-      <Snackbar visible={visible}>
-        By selecting &quot;Other,&quot; you will be reporting your incident as Non-Anonymous.
+      <Snackbar visible={visible} wrapperStyle={{ position: 'absolute', top: 0 }}>
+        You will be reporting your incident as Non-Anonymous.
       </Snackbar>
     </>
   );

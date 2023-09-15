@@ -19,6 +19,9 @@ const MapWrapper = ({ children }) => {
       }}
       region={region}
       mapType="satellite"
+      pitchEnabled={false}
+      zoomEnabled={false}
+      moveOnMarkerPress={false}
     >
       {children}
     </MapView>
