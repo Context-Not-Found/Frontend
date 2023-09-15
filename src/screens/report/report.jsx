@@ -1,17 +1,20 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
+import { Text } from 'react-native-paper';
 import { ReportForms } from '../../components';
 
 const Report = () => {
   return (
-    <View style={styles.container}>
-      <ReportForms />
-    </View>
+    <ScrollView>
+      <View style={{ flex: 1, gap: 15, margin: 20 }}>
+        <Text style={{ fontSize: 30, fontWeight: '800', textAlign: 'center' }}>
+          Report Incident
+        </Text>
+
+        <ReportForms />
+      </View>
+    </ScrollView>
   );
 };
 
 export default Report;
-
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', marginHorizontal: 20, gap: 10 }
-});

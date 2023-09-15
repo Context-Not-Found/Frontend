@@ -115,7 +115,7 @@ const Signup = () => {
           mode="outlined"
           keyboardType="numeric"
         />
-        <HelperText type="info">Password should be at least 8 characters.</HelperText>
+        <HelperText type="info">Phone Number should be of 10 Digits.</HelperText>
       </View>
       <HelperText visible={error} type="error" style={styles.helperTxt}>
         {error}
