@@ -83,12 +83,12 @@ const ReportForms = () => {
         buttons={[
           {
             value: 0,
-            label: 'Low'
+            label: 'Mild'
           },
-          { value: 1, label: 'medium' },
+          { value: 1, label: 'Moderate' },
           {
             value: 2,
-            label: 'high'
+            label: 'Urgent'
           }
         ]}
       />
