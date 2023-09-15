@@ -10,12 +10,17 @@ const Login = () => {
   const [userData, setUserData] = useState({ email: null, password: null });
   const { error, setError, loginUser, setLoading, isLoading } = useUserStore();
 
+  const emailRegex = /^[a-zA-Z]{2}\d{4}@srmist\.edu\.in$/;
+
   const handleLogin = async () => {
     if (!userData.email || !userData.password) {
       setError('Please fill in the details.');
       return;
     }
 
+    if (!emailRegex.test(userData.email)) {
+      setError('Invalid email, Please use your official email id');
+    }
     setError(null);
     setLoading(true);
 
