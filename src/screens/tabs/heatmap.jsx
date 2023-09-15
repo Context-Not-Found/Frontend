@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { Circle } from 'react-native-maps';
 import { Appbar } from 'react-native-paper';
 import { MapWrapper } from '../../components';
+import axios from 'axios';
 
 const Heatmap = () => {
+  const [areas, setAreas] = useState([]);
+
+  useEffect(() => {
+    // Replace with your URL
+    const url = 'https://womenprotection.onrender.com/areas';
+
+    axios.get(url)
+      .then(response => {
+        // Set the state using the "markers" key from the response data
+        setAreas(response.data.markers);
+        // console.log(response.data)
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
   const getColorByRadius = (radius) => {
     const colorScale = [
       { radiusMax: 15, color: 'rgba(255,255,0,0.5)' },
@@ -38,12 +56,3 @@ const Heatmap = () => {
 };
 
 export default Heatmap;
-
-// dummy data for testing
-const areas = [
-  { center: { latitude: 28.797688, longitude: 77.537946 }, radius: 15 },
-  { center: { latitude: 28.796342, longitude: 77.539012 }, radius: 30 },
-  { center: { latitude: 28.797675, longitude: 77.538478 }, radius: 20 },
-  { center: { latitude: 28.79829, longitude: 77.538997 }, radius: 40 },
-  { center: { latitude: 28.79886, longitude: 77.538997 }, radius: 40 }
-];
