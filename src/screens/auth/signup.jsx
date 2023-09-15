@@ -14,6 +14,9 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
+  const emailRegex = /^[a-zA-Z]{2}\d{4}@srmist\.edu\.in$/;
+  const passwordRegex = /^.{8,}$/;
+   
   const { error, setError, signUpUser, isLoading, setLoading } = useUserStore();
 
   const { navigate } = useNavigation();
@@ -24,6 +27,15 @@ const Signup = () => {
       return;
     }
 
+    if (!emailRegex.test(userData.email)) {
+      setError('Invalid email format , please use your official Id');
+      return;
+    }
+
+    if (!passwordRegex.test(userData.password)) {
+      setError('Password should be atleast 8 characters');
+      return;
+    }
     if (userData.password !== confirmPassword) {
       setError('Passwords do not match.');
       return;
