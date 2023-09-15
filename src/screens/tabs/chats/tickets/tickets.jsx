@@ -1,16 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import { useEffect } from 'react';
 import { FlatList, View } from 'react-native';
 import { FAB, IconButton, List, Text, TouchableRipple, useTheme } from 'react-native-paper';
 import { useTicketStore } from '../../../../store';
 
 const Tickets = () => {
-  const { tickets, closeTicket, getOpenTickets } = useTicketStore();
+  const { tickets, closeTicket } = useTicketStore();
   const { navigate } = useNavigation();
-
-  useEffect(() => {
-    getOpenTickets();
-  }, []);
 
   const TicketItem = ({ ticket }) => {
     const { colors } = useTheme();
