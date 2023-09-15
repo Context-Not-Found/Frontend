@@ -1,3 +1,4 @@
+import 'dayjs/locale/en-in';
 import { View } from 'react-native';
 import { Bubble, GiftedChat, Send } from 'react-native-gifted-chat';
 import { IconButton, useTheme } from 'react-native-paper';
@@ -37,6 +38,7 @@ const ChatRoom = ({ messages, onSend, user }) => {
       onSend={onSend}
       user={{ _id: user, name: `User ${user}` }}
       placeholder="Type your message here..."
+      locale="en-in"
       alwaysShowSend
       scrollToBottom={true}
       alignTop

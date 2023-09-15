@@ -1,8 +1,8 @@
-import { useWebSocket } from '../../hooks/useWebSocket';
-import { useCommunityStore, useUserStore } from '../../store';
-import ChatRoom from './chatRoom';
+import { ChatRoom } from '../../../components';
+import { useWebSocket } from '../../../hooks/useWebSocket';
+import { useCommunityStore, useUserStore } from '../../../store';
 
-export default function RoomScreen() {
+export default function Community() {
   const { groupMessages, setMessage } = useCommunityStore();
   const {
     user: { user_id }
