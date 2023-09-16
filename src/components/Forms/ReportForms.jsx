@@ -104,9 +104,9 @@ const ReportForms = () => {
             setFormData({ ...formData, rating });
           }}
           buttons={[
-            { value: 0, label: 'Low' },
-            { value: 1, label: 'Medium' },
-            { value: 2, label: 'High' }
+            { value: 0, label: 'mild' },
+            { value: 1, label: 'moderate' },
+            { value: 2, label: 'severe' }
           ]}
         />
       </View>
