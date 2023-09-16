@@ -129,7 +129,6 @@ const ReportForms = () => {
         onPress={async () => {
           try {
             await createTicket(formData);
-            console.log(formData);
           } finally {
             navigate('TicketList');
           }

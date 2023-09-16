@@ -15,11 +15,10 @@ const DetailsBox = ({ details }) => {
         <Divider
           style={{ marginTop: 5, marginBottom: 10, height: 2, backgroundColor: colors.secondary }}
         />
-        <Text variant="bodyLarge">Email: {details.email}</Text>
 
         <Divider style={{ height: 0, margin: 2 }} />
 
-        <Text variant="bodyLarge">Phone Number: {details.number}</Text>
+        <Text variant="bodyLarge">Phone Number: {details.phone_number}</Text>
       </Card.Content>
     </Card>
   );

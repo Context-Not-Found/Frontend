@@ -1,32 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Appbar, Divider, List } from 'react-native-paper';
-
-// Sample data
-const notifications = [
-  {
-    id: '1',
-    title: 'New message',
-    description: 'John sent you a new message.',
-    timestamp: '2 mins ago'
-  },
-  {
-    id: '2',
-    title: 'App update',
-    description: 'A new update is available.',
-    timestamp: '1 hour ago'
-  }
-];
+import { useNotificationStore } from '../store';
 
 const NotificationItem = ({ item, onPress }) => (
   <TouchableOpacity onPress={() => onPress(item)}>
     <View style={itemStyles.container}>
       <List.Item
-        title={item.title}
-        description={item.description}
+        title="Assistance Required"
+        description="Check Community Chat"
         left={(props) => <List.Icon {...props} icon="bell" />}
-        right={() => <Text style={itemStyles.timestamp}>{item.timestamp}</Text>}
       />
       <Divider />
     </View>
@@ -36,8 +20,14 @@ const NotificationItem = ({ item, onPress }) => (
 const NotificationScreen = () => {
   const { navigate, goBack } = useNavigation();
 
+  const { notifications, fetchNotifications } = useNotificationStore();
+
+  useEffect(() => {
+    fetchNotifications();
+  }, []);
+
   return (
-    <View style={screenStyles.container}>
+    <View style={{ flex: 1 }}>
       <Appbar.Header>
         <Appbar.BackAction
           onPress={() => {
@@ -52,21 +42,15 @@ const NotificationScreen = () => {
           <NotificationItem
             item={item}
             onPress={() => {
-              navigate('RealtimeMap');
+              navigate('Chat');
             }}
           />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.sos_id}
       />
     </View>
   );
 };
-
-const screenStyles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});
 
 const itemStyles = StyleSheet.create({
   timestamp: {

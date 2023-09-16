@@ -1,12 +1,14 @@
 import { useNavigation } from '@react-navigation/native';
 import * as Location from 'expo-location';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Appbar } from 'react-native-paper';
 import { DetailsBox, SosBanner, SosButton } from '../../components';
-import { useCommunityStore, useHeatmapStore, useTicketStore } from '../../store';
+import { useCommunityStore, useHeatmapStore, useTicketStore, useUserStore } from '../../store';
+import { axios_ } from '../../store/axios';
 
 const SOS = () => {
   const { navigate } = useNavigation();
+  const { user } = useUserStore();
 
   const [location, setLocation] = useState(null);
   const [helpText, setHelpText] = useState(null);
@@ -37,19 +39,32 @@ const SOS = () => {
     })();
   }, []);
 
-  const handleSosBtn = () => {
+  const handleSosBtn = async () => {
     if (!isSosOn && location) {
       setHelpText('SOS button pressed. Sending location!');
       setIsSosOn(true);
       setBanner(true);
+
+      try {
+        await axios_.post('/sos/create', {
+          user_id: user.user_id,
+          lat: location.coords.latitude,
+          long: location.coords.longitude
+        });
+      } catch (error) {
+        setHelpText('Error Sending the location');
+      }
     } else if (isSosOn && location) {
       setHelpText('Turning Off SOS!');
       setIsSosOn(false);
       setBanner(true);
+      try {
+        await axios_.patch(`/sos/close/${user.user_id}`);
+      } catch (error) {
+        setHelpText('Error Closing The live location');
+      }
     }
   };
-
-  const handleBanner = () => setBanner(false);
 
   return (
     <>
@@ -62,17 +77,11 @@ const SOS = () => {
           }}
         />
       </Appbar.Header>
-      <SosBanner visible={banner} text={helpText} onPress={handleBanner} />
+      <SosBanner visible={banner} text={helpText} onPress={() => setBanner(false)} />
       <SosButton isSosOn={isSosOn} onPress={handleSosBtn} />
-      <DetailsBox details={details} />
+      <DetailsBox details={user} />
     </>
   );
 };
 
 export default SOS;
-
-const details = {
-  name: 'test name',
-  email: 'test@gmial.com',
-  number: 123456789
-};

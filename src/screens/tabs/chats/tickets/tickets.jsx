@@ -22,7 +22,7 @@ const Tickets = () => {
             marginVertical: 5,
             borderRadius: 20,
             paddingVertical: 15,
-            backgroundColor: colors.surface
+            backgroundColor: colors.primaryContainer
           }}
           title="Ticket"
           right={(props) => <List.Item {...props} title={`ID: ${ticket_id}`} />}
