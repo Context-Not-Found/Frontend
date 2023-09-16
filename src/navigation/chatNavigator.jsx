@@ -2,6 +2,8 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { createStackNavigator } from '@react-navigation/stack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Community, HelpBot, Report, TicketChat, Tickets } from '../screens';
+import { IconButton } from 'react-native-paper';
+import { useTicketStore } from '../store';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -21,6 +23,7 @@ export default Chat;
 
 const TicketStack = () => {
   const Stack = createStackNavigator();
+  const { closeTicket } = useTicketStore();
 
   return (
     <Stack.Navigator initialRouteName="TicketList">
@@ -29,7 +32,15 @@ const TicketStack = () => {
       <Stack.Screen
         name="TicketChatRoom"
         component={TicketChat}
-        options={{ headerStatusBarHeight: 0 }}
+        options={{
+          headerStatusBarHeight: 0,
+          headerRight: () => (
+            <IconButton
+              icon="delete" // Use an appropriate icon for closing the ticket
+              onPress={closeTicket}
+            />
+          )
+        }}
       />
     </Stack.Navigator>
   );

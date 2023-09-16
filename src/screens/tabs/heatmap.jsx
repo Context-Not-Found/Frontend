@@ -2,15 +2,17 @@ import { View } from 'react-native';
 import { Circle } from 'react-native-maps';
 import { Appbar } from 'react-native-paper';
 import { MapWrapper } from '../../components';
-import { useHeatmapStore } from '../../store';
+import { useHeatmapStore, useUserStore } from '../../store';
 
 const Heatmap = () => {
   const { heatMap, getColorByRadius } = useHeatmapStore();
+  const { logoutUser } = useUserStore();
 
   return (
     <View>
       <Appbar.Header>
         <Appbar.Content title="HeatMap" />
+        <Appbar.Action icon="logout" onPress={logoutUser} />
       </Appbar.Header>
       <MapWrapper>
         {heatMap.map(({ center, radius }, i) => (

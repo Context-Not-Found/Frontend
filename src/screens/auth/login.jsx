@@ -40,7 +40,7 @@ const Login = () => {
   return (
     <View style={styles.container}>
       <Text variant="displaySmall" style={styles.title}>
-        Welcome to the App
+        Welcome to SafeHer
       </Text>
       <View>
         <TextInput
