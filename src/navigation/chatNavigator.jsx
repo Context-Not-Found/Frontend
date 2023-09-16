@@ -11,7 +11,7 @@ const Chat = () => {
   return (
     <Tab.Navigator initialRouteName="Community" style={{ paddingTop: top }}>
       <Tab.Screen name="Community" component={Community} />
-      <Tab.Screen name="Tickets" component={TicketStack} />
+      <Tab.Screen name="Tickets" component={TicketStack} options={{ title: 'Report' }} />
       <Tab.Screen name="Help" component={HelpBot} />
     </Tab.Navigator>
   );
@@ -23,10 +23,14 @@ const TicketStack = () => {
   const Stack = createStackNavigator();
 
   return (
-    <Stack.Navigator initialRouteName="TicketList" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="TicketList" component={Tickets} />
-      <Stack.Screen name="ReportForm" component={Report} />
-      <Stack.Screen name="TicketChatRoom" component={TicketChat} />
+    <Stack.Navigator initialRouteName="TicketList">
+      <Stack.Screen name="TicketList" component={Tickets} options={{ headerShown: false }} />
+      <Stack.Screen name="ReportForm" component={Report} options={{ headerStatusBarHeight: 0 }} />
+      <Stack.Screen
+        name="TicketChatRoom"
+        component={TicketChat}
+        options={{ headerStatusBarHeight: 0 }}
+      />
     </Stack.Navigator>
   );
 };

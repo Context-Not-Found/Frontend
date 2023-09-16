@@ -1,10 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import { FlatList, View } from 'react-native';
-import { FAB, IconButton, List, Text, TouchableRipple, useTheme } from 'react-native-paper';
+import { FAB, List, Text, TouchableRipple, useTheme } from 'react-native-paper';
 import { useTicketStore } from '../../../../store';
 
 const Tickets = () => {
-  const { tickets, closeTicket } = useTicketStore();
+  const { tickets } = useTicketStore();
   const { navigate } = useNavigation();
 
   const TicketItem = ({ ticket }) => {
@@ -18,15 +18,15 @@ const Tickets = () => {
             fontSize: 20
           }}
           style={{
-            backgroundColor: colors.surface,
-            borderBottomWidth: 1,
-            borderBottomColor: colors.outline
+            marginHorizontal: 10,
+            marginVertical: 5,
+            borderRadius: 20,
+            paddingVertical: 15,
+            backgroundColor: colors.surface
           }}
-          title={`Ticket Id: ${ticket_id}`}
+          title="Ticket"
+          right={(props) => <List.Item {...props} title={`ID: ${ticket_id}`} />}
           left={(props) => <List.Icon {...props} icon="ticket" />}
-          right={(props) => (
-            <IconButton {...props} icon="delete" onPress={() => closeTicket(ticket_id)} />
-          )}
         />
       </TouchableRipple>
     );

@@ -24,14 +24,15 @@ export const useTicketStore = create((set) => ({
     }));
   },
 
-  createTicket: async () => {
+  createTicket: async (ticket) => {
     const {
       user: { user_id }
     } = useUserStore.getState();
 
     try {
       if (user_id) {
-        const { data } = await axios.post('/tickets/create/', { user_id });
+        delete ticket.rating;
+        const { data } = await axios.post('/tickets/create/', { ...ticket, user_id });
         set((state) => ({
           tickets: [...state.tickets, data]
         }));
