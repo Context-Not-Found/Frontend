@@ -1,6 +1,6 @@
 import MapView from 'react-native-maps';
 
-const MapWrapper = ({ children }) => {
+const MapWrapper = ({ children, zoom = true }) => {
   const topLeft = { latitude: 28.799824849803834, longitude: 77.5366675332206 };
   const bottomRight = { latitude: 28.79478538122577, longitude: 77.54283661378919 };
 
@@ -20,7 +20,7 @@ const MapWrapper = ({ children }) => {
       region={region}
       mapType="satellite"
       pitchEnabled={false}
-      zoomEnabled={false}
+      zoomEnabled={zoom}
       moveOnMarkerPress={false}
     >
       {children}

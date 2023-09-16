@@ -80,7 +80,7 @@ const ReportForms = () => {
           Location <Text> (Hold the marker to set location)</Text>
         </Text>
         <View style={{ width: width - 40, aspectRatio: 1 }}>
-          <MapWrapper>
+          <MapWrapper zoom={false}>
             <Marker
               draggable
               coordinate={{ latitude: formData.lat, longitude: formData.long }}
