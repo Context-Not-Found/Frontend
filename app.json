@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "SafeHer",
+    "slug": "SafeHer",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "SafeHer",
+    "userInterfaceStyle": "automatic",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "backgroundColor": "#ddffe2",
+      "image": "./assets/splash.png",
+      "resizeMode": "contain"
+    }
+  },
+  "plugins": ["expo-router"],
+  "experiments": {
+    "typedRoutes": true
+  }
+}

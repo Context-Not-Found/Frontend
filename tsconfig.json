@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "ES2020",
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/components": ["components"],
+      "@/assets/*": ["assets/*"],
+      "@/store": ["store"],
+      "@/hooks": ["hooks"]
+    }
+  },
+  "extends": "expo/tsconfig.base"
+}
