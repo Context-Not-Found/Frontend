@@ -24,3 +24,5 @@ yarn-error.log
 # husky
 .husky/_
 .vscode
+
+eas.json

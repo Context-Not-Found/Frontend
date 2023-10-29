@@ -4,17 +4,26 @@
     "slug": "SafeHer",
     "version": "1.0.0",
     "orientation": "portrait",
-    "scheme": "SafeHer",
+    "scheme": "safeher",
     "userInterfaceStyle": "automatic",
     "icon": "./assets/icon.png",
     "splash": {
       "backgroundColor": "#ddffe2",
       "image": "./assets/splash.png",
       "resizeMode": "contain"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "68704f08-0687-4975-b930-e66e55bc80f6"
+      }
+    },
+    "android": {
+      "package": "com.drishxd.SafeHer"
     }
   },
   "plugins": ["expo-router"],
   "experiments": {
+    "tsconfigPaths": true,
     "typedRoutes": true
   }
 }
