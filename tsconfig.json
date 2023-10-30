@@ -4,10 +4,7 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/components": ["components"],
-      "@/assets/*": ["assets/*"],
-      "@/store": ["store"],
-      "@/hooks": ["hooks"]
+      "@/*": ["src/*"]
     }
   },
   "extends": "expo/tsconfig.base"

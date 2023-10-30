@@ -1,3 +1,4 @@
+import { LmAlert } from "@tamagui-extras/core";
 import {
   LmFormRhfProvider,
   LmInputRhf,
@@ -7,6 +8,7 @@ import { ChevronLeft } from "@tamagui/lucide-icons";
 import React, { Dispatch, FC, SetStateAction } from "react";
 import { Button, H2, XStack, YStack } from "tamagui";
 
+import { useUserStore } from "../../store/User";
 import MySheet from "../common/MySheet";
 
 interface LoginProps {
@@ -15,6 +17,8 @@ interface LoginProps {
 }
 
 const LogIn: FC<LoginProps> = ({ open, setOpen }) => {
+  const { error, isLoading, login } = useUserStore();
+
   return (
     <MySheet open={open} setOpen={setOpen}>
       <XStack space="$6" marginBottom="$4">
@@ -28,6 +32,7 @@ const LogIn: FC<LoginProps> = ({ open, setOpen }) => {
             label="Email"
             name="email"
             textContentType="emailAddress"
+            keyboardType="email-address"
             placeholder="ab1234@srmist.edu.in"
             helperTextProps={{ fontSize: "$2" }}
             rules={{
@@ -52,11 +57,8 @@ const LogIn: FC<LoginProps> = ({ open, setOpen }) => {
               }
             }}
           />
-          <LmSubmitButtonRhf
-            onSubmit={(data) => {
-              console.log(data);
-            }}
-          >
+          {error && <LmAlert severity="error" text={error} animation="lazy" />}
+          <LmSubmitButtonRhf loading={isLoading} onSubmit={login}>
             Log In
           </LmSubmitButtonRhf>
         </YStack>

@@ -1,14 +1,14 @@
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
+import { Slot, SplashScreen } from "expo-router";
 import { useEffect } from "react";
 import { TamaguiProvider, Theme } from "tamagui";
 
+import config from "../../tamagui.config";
 import { MySafeAreaView } from "../components/common/Custom";
-import config from "../tamagui.config";
 
 SplashScreen.preventAutoHideAsync();
 
-export default function Layout() {
+export default function RootLayout() {
   const [loaded] = useFonts({
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf")
@@ -27,7 +27,7 @@ export default function Layout() {
       <Theme name={"dark"}>
         <Theme name={"dark_green"}>
           <MySafeAreaView>
-            <Stack screenOptions={{ headerShown: false }} />
+            <Slot />
           </MySafeAreaView>
         </Theme>
       </Theme>

@@ -46,13 +46,13 @@
     "parser": "@typescript-eslint/parser",
     "root": true,
     "plugins": [
-      "react",
       "@typescript-eslint"
     ]
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
     "@react-native-async-storage/async-storage": "1.18.2",
+    "@tamagui-extras/core": "^1.5.0",
     "@tamagui-extras/form": "^1.7.0",
     "@tamagui/animations-react-native": "^1.75.7",
     "@tamagui/babel-plugin": "^1.75.7",
@@ -63,6 +63,7 @@
     "axios": "^1.6.0",
     "expo": "49.0.16",
     "expo-constants": "~14.4.2",
+    "expo-dev-client": "~2.4.11",
     "expo-font": "~11.4.0",
     "expo-linear-gradient": "~12.3.0",
     "expo-linking": "~5.0.2",
@@ -78,7 +79,7 @@
     "react-native-screens": "~3.22.0",
     "react-native-svg": "13.9.0",
     "tamagui": "^1.75.7",
-    "expo-dev-client": "~2.4.11"
+    "zustand": "^4.4.4"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",

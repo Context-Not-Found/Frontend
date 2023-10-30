@@ -6,10 +6,10 @@
     "orientation": "portrait",
     "scheme": "safeher",
     "userInterfaceStyle": "automatic",
-    "icon": "./assets/icon.png",
+    "icon": "./src/assets/icon.png",
     "splash": {
       "backgroundColor": "#ddffe2",
-      "image": "./assets/splash.png",
+      "image": "./src/assets/splash.png",
       "resizeMode": "contain"
     },
     "extra": {
@@ -23,7 +23,6 @@
   },
   "plugins": ["expo-router"],
   "experiments": {
-    "tsconfigPaths": true,
-    "typedRoutes": true
+    "tsconfigPaths": true
   }
 }
