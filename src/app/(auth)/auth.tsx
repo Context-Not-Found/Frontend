@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, H1, H4, Paragraph, YStack } from "tamagui";
 
-import { LogIn, MyStack, SignUp } from "../components";
+import { LogIn, MyStack, SignUp } from "../../components";
 
 const Auth = () => {
   const [openLogin, setOpenLogin] = useState(false);
@@ -9,7 +9,7 @@ const Auth = () => {
 
   return (
     <>
-      <MyStack>
+      <MyStack jc="space-between">
         <YStack space="$4">
           <YStack>
             <H1 scale="$0.75" textAlign="center">

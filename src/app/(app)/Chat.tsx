@@ -1,13 +1,10 @@
-import { Paragraph } from "tamagui";
-
-import { MyStack } from "../../components";
+import { ChatRoom } from "../../components";
+import { useChatStore } from "../../store";
 
 const Chat = () => {
-  return (
-    <MyStack>
-      <Paragraph>Chat</Paragraph>
-    </MyStack>
-  );
+  const { messages, setMessage } = useChatStore();
+
+  return <ChatRoom messages={messages} onSend={setMessage} />;
 };
 
 export default Chat;

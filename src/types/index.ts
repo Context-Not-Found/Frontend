@@ -8,4 +8,11 @@ interface User {
   is_teacher?: boolean;
 }
 
-export type { User };
+interface Message {
+  message_id: number;
+  created_at: Date;
+  message_text: string;
+  user: User;
+}
+
+export type { Message, User };
