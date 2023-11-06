@@ -10,7 +10,7 @@ interface ChatsState {
   fetchMessages: () => Promise<void>;
 }
 
-export const useChatStore = create<ChatsState>((set) => ({
+export const useChatStore = create<ChatsState>()((set) => ({
   messages: [],
 
   setMessage: (msg) => {

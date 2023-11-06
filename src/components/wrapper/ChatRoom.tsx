@@ -1,6 +1,9 @@
-import { greenDark, radius, whiteA } from "@tamagui/themes";
+import { ArrowDown } from "@tamagui/lucide-icons";
+import { cyan, greenA, greenDark, radius, whiteA } from "@tamagui/themes";
 import { type FC } from "react";
 import {
+  Avatar,
+  AvatarProps,
   Bubble,
   BubbleProps,
   Composer,
@@ -65,22 +68,36 @@ const ChatRoom: FC<ChatRoomProps> = ({ messages, onSend }) => {
     );
   };
 
+  const renderAvatar = (props: AvatarProps<IMessage>) => {
+    return <Avatar {...props} renderAvatarOnTop />;
+  };
+
   const renderLoading = () => {
     return <Spinner size="large" />;
   };
 
+  const parsePattern = () => {
+    return [
+      { type: "phone", style: { color: cyan.cyan8 } },
+      { type: "url", style: { color: cyan.cyan8 } }
+    ];
+  };
+
   return (
-    <View f={1} mt="$12" pt="$2" backgroundColor={"$backgroundStrong"}>
+    <View f={1} mt="$12" pt="$2" bc="$backgroundStrong">
       <GiftedChat
         messages={messages}
         user={{ _id: user!.user_id!, name: user!.name }}
         renderBubble={renderBubble}
-        renderLoading={renderLoading}
         renderInputToolbar={renderInputToolBar}
+        renderAvatar={renderAvatar}
+        parsePatterns={parsePattern}
+        renderLoading={renderLoading}
+        scrollToBottomStyle={{ backgroundColor: greenA.greenA4 }}
+        scrollToBottomComponent={() => <ArrowDown />}
         scrollToBottom={true}
         inverted={false}
         isTyping={true}
-        renderAvatarOnTop
         alignTop
       />
     </View>
