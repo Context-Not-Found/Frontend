@@ -8,20 +8,13 @@ import { ChevronLeft } from "@tamagui/lucide-icons";
 import React, { Dispatch, FC, SetStateAction } from "react";
 import { Button, H2, XStack, YStack } from "tamagui";
 
-import { useUserStore } from "../../store/User";
+import { useUserStore } from "../../store";
+import { User } from "../../types";
 import MySheet from "../common/MySheet";
 
 interface SignUpProps {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-}
-
-interface FormValues {
-  name: string;
-  email: string;
-  password: string;
-  cfg_password: string;
-  mobile: number;
 }
 
 const SignUp: FC<SignUpProps> = ({ open, setOpen }) => {
@@ -83,7 +76,7 @@ const SignUp: FC<SignUpProps> = ({ open, setOpen }) => {
             placeholder="Abcd@123"
             rules={{
               validate: {
-                matchPass: (value, values: FormValues) =>
+                matchPass: (value, values: User) =>
                   value === values.password || "Passwords do not match"
               }
             }}

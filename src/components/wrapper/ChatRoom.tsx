@@ -2,8 +2,6 @@ import { ArrowDown } from "@tamagui/lucide-icons";
 import { cyan, greenA, greenDark, radius, whiteA } from "@tamagui/themes";
 import { type FC } from "react";
 import {
-  Avatar,
-  AvatarProps,
   Bubble,
   BubbleProps,
   Composer,
@@ -25,6 +23,7 @@ interface ChatRoomProps {
 const ChatRoom: FC<ChatRoomProps> = ({ messages, onSend }) => {
   const { user } = useUserStore();
 
+  // Chat Bubble
   const renderBubble = (props: BubbleProps<IMessage>) => {
     return (
       <Bubble
@@ -42,6 +41,7 @@ const ChatRoom: FC<ChatRoomProps> = ({ messages, onSend }) => {
     );
   };
 
+  // Bottom Toolbar
   const renderInputToolBar = (props: InputToolbarProps<IMessage>) => {
     return (
       <InputToolbar
@@ -68,14 +68,7 @@ const ChatRoom: FC<ChatRoomProps> = ({ messages, onSend }) => {
     );
   };
 
-  const renderAvatar = (props: AvatarProps<IMessage>) => {
-    return <Avatar {...props} renderAvatarOnTop />;
-  };
-
-  const renderLoading = () => {
-    return <Spinner size="large" />;
-  };
-
+  // Style Links & Phone Number
   const parsePattern = () => {
     return [
       { type: "phone", style: { color: cyan.cyan8 } },
@@ -83,6 +76,7 @@ const ChatRoom: FC<ChatRoomProps> = ({ messages, onSend }) => {
     ];
   };
 
+  // Chat Sceeen
   return (
     <View f={1} mt="$12" pt="$2" bc="$backgroundStrong">
       <GiftedChat
@@ -90,14 +84,14 @@ const ChatRoom: FC<ChatRoomProps> = ({ messages, onSend }) => {
         user={{ _id: user!.user_id!, name: user!.name }}
         renderBubble={renderBubble}
         renderInputToolbar={renderInputToolBar}
-        renderAvatar={renderAvatar}
         parsePatterns={parsePattern}
-        renderLoading={renderLoading}
+        renderLoading={() => <Spinner size="large" />}
         scrollToBottomStyle={{ backgroundColor: greenA.greenA4 }}
         scrollToBottomComponent={() => <ArrowDown />}
         scrollToBottom={true}
         inverted={false}
         isTyping={true}
+        renderAvatarOnTop
         alignTop
       />
     </View>

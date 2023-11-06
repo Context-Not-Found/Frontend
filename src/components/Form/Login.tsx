@@ -8,7 +8,7 @@ import { ChevronLeft } from "@tamagui/lucide-icons";
 import React, { Dispatch, FC, SetStateAction } from "react";
 import { Button, H2, XStack, YStack } from "tamagui";
 
-import { useUserStore } from "../../store/User";
+import { useUserStore } from "../../store";
 import MySheet from "../common/MySheet";
 
 interface LoginProps {
