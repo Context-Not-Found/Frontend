@@ -14,8 +14,6 @@ export const useChatStore = create<ChatsState>()((set) => ({
   messages: [],
 
   setMessage: (msg) => {
-    console.log(msg);
-
     set((state) => ({
       messages: [...state.messages, ...msg]
     }));
@@ -37,7 +35,8 @@ export const useChatStore = create<ChatsState>()((set) => ({
 
       set({ messages });
     } catch (error) {
-      console.error("Error fetching community messages: ", error);
+      console.error(error);
+      throw new Error("Error fetching community messages");
     }
   }
 }));

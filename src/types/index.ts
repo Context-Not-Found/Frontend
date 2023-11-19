@@ -1,3 +1,5 @@
+import { FunctionComponent } from "react";
+
 // Users
 interface User {
   email: string;
@@ -27,12 +29,13 @@ interface Marker {
 }
 
 // Tickets List and Ticket Msg
-interface Tickets {
+interface Ticket {
   teacher_id: number;
   user_id: number;
   is_anonymous: boolean;
   ticket_id: number;
   is_open: boolean;
+  rating?: string;
 }
 
 interface TicketMsg {
@@ -52,4 +55,8 @@ interface SOS {
   is_open: boolean;
 }
 
-export type { Marker, Message, SOS, TicketMsg, Tickets, User };
+// Tamagui IconProps Types
+type ButtonIconProps = { color?: string; size?: number };
+type IconProp = JSX.Element | FunctionComponent<ButtonIconProps> | null;
+
+export type { IconProp, Marker, Message, SOS, Ticket, TicketMsg, User };

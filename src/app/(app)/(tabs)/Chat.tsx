@@ -1,5 +1,5 @@
-import { ChatRoom } from "../../components";
-import { useChatStore } from "../../store";
+import { ChatRoom } from "../../../components";
+import { useChatStore } from "../../../store";
 
 const Chat = () => {
   const { messages, setMessage } = useChatStore();

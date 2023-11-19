@@ -3,7 +3,7 @@ import MapView, { LatLng } from "react-native-maps";
 
 interface MapsProps {
   children: ReactNode;
-  zoom: boolean;
+  zoom?: boolean;
 }
 const MapWrapper: FC<MapsProps> = ({ children, zoom = true }) => {
   // Define Coordinate of College
@@ -31,10 +31,7 @@ const MapWrapper: FC<MapsProps> = ({ children, zoom = true }) => {
       pitchEnabled={false}
       moveOnMarkerPress={false}
       zoomEnabled={zoom}
-      style={{
-        height: "100%",
-        width: "100%"
-      }}
+      style={{ height: "100%", width: "100%" }}
     >
       {children}
     </MapView>

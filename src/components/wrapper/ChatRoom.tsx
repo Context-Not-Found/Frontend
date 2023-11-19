@@ -11,8 +11,9 @@ import {
   InputToolbarProps,
   Send
 } from "react-native-gifted-chat";
-import { Spinner, View } from "tamagui";
+import { View } from "tamagui";
 
+import Loader from "../../components/common/Loader";
 import { useUserStore } from "../../store";
 
 interface ChatRoomProps {
@@ -46,7 +47,6 @@ const ChatRoom: FC<ChatRoomProps> = ({ messages, onSend }) => {
     return (
       <InputToolbar
         {...props}
-        accessoryStyle={{}}
         containerStyle={{
           marginHorizontal: 10,
           paddingHorizontal: 10,
@@ -78,14 +78,14 @@ const ChatRoom: FC<ChatRoomProps> = ({ messages, onSend }) => {
 
   // Chat Sceeen
   return (
-    <View f={1} mt="$12" pt="$2" bc="$backgroundStrong">
+    <View f={1} py="$2" bc="$backgroundStrong">
       <GiftedChat
         messages={messages}
         user={{ _id: user!.user_id!, name: user!.name }}
         renderBubble={renderBubble}
         renderInputToolbar={renderInputToolBar}
         parsePatterns={parsePattern}
-        renderLoading={() => <Spinner size="large" />}
+        renderLoading={() => <Loader />}
         scrollToBottomStyle={{ backgroundColor: greenA.greenA4 }}
         scrollToBottomComponent={() => <ArrowDown />}
         scrollToBottom={true}

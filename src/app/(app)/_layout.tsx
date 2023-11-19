@@ -1,34 +1,50 @@
-import { TopTabs } from "@bacons/expo-router-top-tabs";
-import { MoreVertical } from "@tamagui/lucide-icons";
-import { greenDark, whiteA } from "@tamagui/themes";
-import { Redirect } from "expo-router";
-import { Button, H3, XStack } from "tamagui";
+import { Redirect, Stack } from "expo-router";
+import { useEffect } from "react";
 
-import { useUserStore } from "../../store";
+import { fetchDataWithRetry } from "../../helper";
+import {
+  useChatStore,
+  useHeatmapStore,
+  useNotificationStore,
+  useTicketStore,
+  useUserStore
+} from "../../store";
 
-export default function TabLayout() {
+const AppLayout = () => {
   const { user } = useUserStore();
-  if (!user) return <Redirect href="/auth" />;
+
+  const { fetchAreas } = useHeatmapStore();
+  const { fetchMessages } = useChatStore();
+  const { fetchTickets } = useTicketStore();
+  const { fetchNotifications } = useNotificationStore();
+
+  // Fetching all data from store and retring if anyone failed
+  const fetchAllData = async () => {
+    const fetchFunctions = [
+      fetchTickets,
+      fetchMessages,
+      fetchAreas,
+      fetchNotifications
+    ];
+
+    for (const fetchFunction of fetchFunctions) {
+      await fetchDataWithRetry(fetchFunction);
+    }
+  };
+
+  useEffect(() => {
+    if (!user) return;
+
+    fetchAllData();
+  }, [user]);
+
+  if (!user) return <Redirect href="/Auth" />;
 
   return (
-    <TopTabs
-      screenOptions={{
-        animationEnabled: true,
-        tabBarStyle: { backgroundColor: greenDark.green2 },
-        tabBarIndicatorStyle: { backgroundColor: greenDark.green10 },
-        tabBarActiveTintColor: greenDark.green10,
-        tabBarInactiveTintColor: whiteA.whiteA11
-      }}
-    >
-      <TopTabs.Header>
-        <XStack bg="$background" px="$4" ai="center" jc="space-between">
-          <H3 pointerEvents="none">SafeHer</H3>
-          <Button p="$-0.5" icon={<MoreVertical size="$1" />} chromeless />
-        </XStack>
-      </TopTabs.Header>
-      <TopTabs.Screen name="index" options={{ title: "Shield" }} />
-      <TopTabs.Screen name="Chat" options={{ title: "Chat" }} />
-      <TopTabs.Screen name="Heatmap" options={{ title: "Heatmap" }} />
-    </TopTabs>
+    <Stack
+      screenOptions={{ headerShown: false, animation: "fade_from_bottom" }}
+    />
   );
-}
+};
+
+export default AppLayout;

@@ -13,11 +13,11 @@ export const useNotificationStore = create<NotifyState>()((set) => ({
 
   fetchNotifications: async () => {
     try {
-      const { data } = await axios.get<SOS[]>("/sos/");
-
-      set({ notifications: data });
+      const { data: notifications } = await axios.get<SOS[]>("/sos/");
+      set({ notifications });
     } catch (error) {
-      console.error(`Error fetching notifications`);
+      console.error(error);
+      throw new Error("rror fetching notifications");
     }
   }
 }));

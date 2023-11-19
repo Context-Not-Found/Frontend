@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { TamaguiProvider, Theme } from "tamagui";
 
 import config from "../../tamagui.config";
-import { MySafeAreaView } from "../components/common/Custom";
+import { MySafeAreaView } from "../components";
 
 SplashScreen.preventAutoHideAsync();
 
