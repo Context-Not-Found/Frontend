@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { requestForegroundPermissionsAsync } from 'expo-location';
 import { useEffect, useMemo } from 'react';
 import { useColorScheme } from 'react-native';
+import 'react-native-gesture-handler';
 import { MD3DarkTheme, MD3LightTheme, Provider as PaperProvider } from 'react-native-paper';
 import Navigator from './src/navigation';
 
