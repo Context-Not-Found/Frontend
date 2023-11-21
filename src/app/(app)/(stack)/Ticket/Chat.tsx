@@ -10,7 +10,7 @@ const Chat = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
 
   useEffect(() => {
-    fetchTicketMsgs(Number(id));
+    fetchTicketMsgs(id!);
 
     return () => clearMsg();
   }, [id]);

@@ -26,6 +26,7 @@ const MapWrapper: FC<MapsProps> = ({ children, zoom = true }) => {
 
   return (
     <MapView
+      provider="google"
       mapType="satellite"
       region={region}
       pitchEnabled={false}
