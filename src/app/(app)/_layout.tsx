@@ -1,8 +1,8 @@
 import { Redirect, Stack } from "expo-router";
 import { useEffect } from "react";
 
-import { fetchDataWithRetry } from "../../helper";
 import {
+  fetchDataWithRetry,
   useChatStore,
   useHeatmapStore,
   useNotificationStore,
@@ -21,9 +21,9 @@ const AppLayout = () => {
   // Fetching all data from store and retring if anyone failed
   const fetchAllData = async () => {
     const fetchFunctions = [
-      fetchTickets,
       fetchMessages,
       fetchAreas,
+      fetchTickets,
       fetchNotifications
     ];
 

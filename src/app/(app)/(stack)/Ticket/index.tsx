@@ -13,8 +13,12 @@ const TicketList = () => {
     <>
       <ScrollView bg="$backgroundStrong">
         <MyStack>
-          {tickets.map(({ ticket_id: id }) => (
-            <TickitItem key={id} id={id} />
+          {tickets.map(({ ticket_id, user_id }) => (
+            <TickitItem
+              key={ticket_id}
+              ticketId={ticket_id.toString()}
+              userId={user_id.toString()}
+            />
           ))}
         </MyStack>
       </ScrollView>
@@ -25,13 +29,16 @@ const TicketList = () => {
 
 export default TicketList;
 
-const TickitItem = ({ id }: { id: number }) => (
-  <Link href={{ pathname: "/Ticket/Chat", params: { id } }} asChild>
+const TickitItem = ({ ticketId, userId }: TicketParams) => (
+  <Link
+    href={{ pathname: "/Ticket/Chat", params: { ticketId, userId } }}
+    asChild
+  >
     <ListItem
       scaleIcon={2}
       icon={Ticket}
       title="Ticket"
-      subTitle={`ID: ${id}`}
+      subTitle={`ID: ${ticketId}`}
       borderRadius="$5"
       pressTheme
       bordered
@@ -53,3 +60,8 @@ const FloatingBtn = () => (
     onPress={() => router.push("/Ticket/Form")}
   />
 );
+
+export type TicketParams = {
+  ticketId: string;
+  userId: string;
+};

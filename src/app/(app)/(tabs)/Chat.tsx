@@ -1,10 +1,17 @@
 import { ChatRoom } from "../../../components";
-import { useChatStore } from "../../../store";
+import { useWebSocket } from "../../../hooks";
+import { useChatStore, useUserStore } from "../../../store";
 
 const Chat = () => {
   const { messages, setMessage } = useChatStore();
+  const { user } = useUserStore();
 
-  return <ChatRoom messages={messages} onSend={setMessage} />;
+  const sendMessage = useWebSocket({
+    setMessage,
+    url: `/community_chat/${user?.user_id}`
+  });
+
+  return <ChatRoom messages={messages} onSend={sendMessage} />;
 };
 
 export default Chat;

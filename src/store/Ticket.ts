@@ -1,14 +1,15 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IMessage } from "react-native-gifted-chat";
 import { create } from "zustand";
 
-import { Ticket, TicketMsg } from "../types";
+import { Message, Ticket, TicketMsg } from "../types";
 import { useUserStore } from "./User";
 import { axios_ as axios } from "./axios";
 
 interface TicketState {
   tickets: Ticket[];
   ticketMsgs: IMessage[];
-  setMessage: (msg: IMessage[]) => void;
+  setMessage: (msg: Message) => void;
   clearMsg: () => void;
   fetchTickets: () => Promise<void>;
   fetchTicketMsgs: (ticketId: string) => Promise<void>;
@@ -23,8 +24,21 @@ export const useTicketStore = create<TicketState>()((set) => ({
 
   // Actions
   setMessage: (msg) => {
+    console.log(msg);
+
     set((state) => ({
-      ticketMsgs: [...state.ticketMsgs, ...msg]
+      ticketMsgs: [
+        ...state.ticketMsgs,
+        {
+          _id: msg.message_id,
+          createdAt: new Date(msg.created_at),
+          text: msg.message_text,
+          user: {
+            _id: msg.user.user_id!,
+            name: `User ${msg.user.name}`
+          }
+        }
+      ]
     }));
   },
 
@@ -69,8 +83,17 @@ export const useTicketStore = create<TicketState>()((set) => ({
     const { user } = useUserStore.getState();
 
     try {
-      const { data: tickets } = await axios.get(`/tickets/${user?.user_id}`);
+      const cachedTickets = await AsyncStorage.getItem("tickets");
+      if (cachedTickets) {
+        set({ tickets: JSON.parse(cachedTickets) });
+        console.log("Fetched Cached Tickets");
+        return;
+      }
+      const { data: tickets } = await axios.get<Ticket[]>(
+        `/tickets/${user?.user_id}`
+      );
       set({ tickets });
+      AsyncStorage.setItem("tickets", JSON.stringify(tickets));
     } catch (error) {
       console.error(error);
       throw new Error(`Error fetching tickets`);
@@ -79,11 +102,13 @@ export const useTicketStore = create<TicketState>()((set) => ({
 
   fetchTicketMsgs: async (ticketId) => {
     try {
-      const { data } = await axios.get(`/tickets/messages/${ticketId}`);
+      const { data } = await axios.get<TicketMsg[]>(
+        `/tickets/messages/${ticketId}`
+      );
 
-      const messages = data.map((message: TicketMsg) => ({
+      const messages: IMessage[] = data.map((message: TicketMsg) => ({
         _id: message.message_id,
-        createdAt: message.created_at,
+        createdAt: new Date(message.created_at),
         text: message.message_text,
         user: {
           _id: message.user_id,

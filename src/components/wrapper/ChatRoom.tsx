@@ -18,7 +18,7 @@ import { useUserStore } from "../../store";
 
 interface ChatRoomProps {
   messages: IMessage[];
-  onSend: (messages: IMessage[]) => void;
+  onSend: (message: IMessage[]) => void;
 }
 
 const ChatRoom: FC<ChatRoomProps> = ({ messages, onSend }) => {
@@ -59,7 +59,6 @@ const ChatRoom: FC<ChatRoomProps> = ({ messages, onSend }) => {
         renderSend={(props) => (
           <Send
             {...props}
-            onSend={onSend}
             containerStyle={{}}
             textStyle={{ color: greenDark.green12, padding: 0, margin: 0 }}
           />
@@ -81,7 +80,7 @@ const ChatRoom: FC<ChatRoomProps> = ({ messages, onSend }) => {
     <View f={1} py="$2" bc="$backgroundStrong">
       <GiftedChat
         messages={messages}
-        user={{ _id: user!.user_id!, name: user!.name }}
+        user={{ _id: user!.user_id!.toString(), name: user!.name! }}
         renderBubble={renderBubble}
         renderInputToolbar={renderInputToolBar}
         parsePatterns={parsePattern}
@@ -91,6 +90,7 @@ const ChatRoom: FC<ChatRoomProps> = ({ messages, onSend }) => {
         scrollToBottom={true}
         inverted={false}
         isTyping={true}
+        onSend={onSend}
         renderAvatarOnTop
         alignTop
       />

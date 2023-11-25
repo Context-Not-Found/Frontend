@@ -3,7 +3,7 @@ import { Sheet } from "tamagui";
 
 interface SheetProps {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  setOpen?: Dispatch<SetStateAction<boolean>>;
   children: ReactNode;
 }
 

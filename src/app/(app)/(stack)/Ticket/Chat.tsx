@@ -2,20 +2,27 @@ import { useLocalSearchParams } from "expo-router";
 import React, { useEffect } from "react";
 
 import { ChatRoom } from "../../../../components";
+import { useWebSocket } from "../../../../hooks";
 import { useTicketStore } from "../../../../store";
+import { type TicketParams } from "./index";
 
 const Chat = () => {
   const { ticketMsgs, fetchTicketMsgs, setMessage, clearMsg } =
     useTicketStore();
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { ticketId, userId } = useLocalSearchParams<TicketParams>();
 
   useEffect(() => {
-    fetchTicketMsgs(id!);
+    fetchTicketMsgs(ticketId!);
 
     return () => clearMsg();
-  }, [id]);
+  }, [ticketId]);
 
-  return <ChatRoom messages={ticketMsgs} onSend={setMessage} />;
+  const sendMessage = useWebSocket({
+    setMessage,
+    url: `/${ticketId}/${userId}`
+  });
+
+  return <ChatRoom messages={ticketMsgs} onSend={sendMessage} />;
 };
 
 export default Chat;

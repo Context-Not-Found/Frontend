@@ -1,12 +1,13 @@
 import { Trash } from "@tamagui/lucide-icons";
 import { Stack } from "expo-router";
 
+import { TicketParams } from ".";
 import { MyHeader, PopupMenuItem } from "../../../../components";
 import { useTicketStore } from "../../../../store";
 
 interface RouteProps {
   name: string;
-  params: { id: string };
+  params: TicketParams;
 }
 
 const TicketLayout = () => {
@@ -22,7 +23,7 @@ const TicketLayout = () => {
         title = "Tickets";
         break;
       case "Chat":
-        title = `Chat ${params!.id}`;
+        title = `Chat ${params!.ticketId}`;
         break;
       default:
         title = name;
@@ -39,7 +40,7 @@ const TicketLayout = () => {
         {
           icon: Trash,
           title: "Delete",
-          onPress: () => closeTicket(params.id)
+          onPress: () => closeTicket(params.ticketId)
         }
       ];
     }
