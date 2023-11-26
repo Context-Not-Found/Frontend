@@ -3,8 +3,9 @@ import { Slot, SplashScreen } from "expo-router";
 import { useEffect } from "react";
 import { TamaguiProvider, Theme } from "tamagui";
 
+import { MySafeAreaView } from "@/components";
+
 import config from "../../tamagui.config";
-import { MySafeAreaView } from "../components";
 
 SplashScreen.preventAutoHideAsync();
 

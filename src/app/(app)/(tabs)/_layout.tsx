@@ -3,8 +3,8 @@ import { greenDark, whiteA } from "@tamagui/themes";
 import { router, usePathname } from "expo-router";
 import { Button, H3, XGroup, XStack } from "tamagui";
 
-import { PopupMenu, TopTabs } from "../../../components";
-import { useUserStore } from "../../../store";
+import { PopupMenu, TopTabs } from "@/components";
+import { useUserStore } from "@/store";
 
 export default function TabLayout() {
   const pathname = usePathname();

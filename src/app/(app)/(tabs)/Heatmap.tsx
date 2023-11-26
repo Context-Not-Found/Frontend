@@ -1,8 +1,8 @@
 import { Heatmap } from "react-native-maps";
 import { H2, Sheet, Text } from "tamagui";
 
-import { MapWrapper, MyStack } from "../../../components";
-import { useHeatmapStore } from "../../../store";
+import { MapWrapper, MyStack } from "@/components";
+import { useHeatmapStore } from "@/store";
 
 const MyHeatmap = () => {
   const { heatMap } = useHeatmapStore();

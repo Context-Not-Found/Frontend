@@ -26,7 +26,8 @@
     "tabWidth": 2,
     "singleQuote": false,
     "importOrder": [
-      "^components/(.*)$",
+      "^\\u0000",
+      "^@/",
       "^[./]"
     ],
     "importOrderSeparation": true,
@@ -47,7 +48,10 @@
     "root": true,
     "plugins": [
       "@typescript-eslint"
-    ]
+    ],
+    "rules": {
+      "@typescript-eslint/no-explicit-any": "off"
+    }
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",

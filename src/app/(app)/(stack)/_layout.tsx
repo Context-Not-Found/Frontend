@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 import React from "react";
 
-import { MyHeader } from "../../../components";
+import { MyHeader } from "@/components";
 
 const StackLayout = () => {
   return (

@@ -55,8 +55,29 @@ interface SOS {
   is_open: boolean;
 }
 
+// Help Bot
+
+interface HelpBotMsg {
+  response: string;
+}
+
 // Tamagui IconProps Types
 type ButtonIconProps = { color?: string; size?: number };
 type IconProp = JSX.Element | FunctionComponent<ButtonIconProps> | null;
 
-export type { IconProp, Marker, Message, SOS, Ticket, TicketMsg, User };
+type TicketParams = {
+  ticketId: string;
+  userId: string;
+};
+
+export type {
+  HelpBotMsg,
+  IconProp,
+  Marker,
+  Message,
+  SOS,
+  Ticket,
+  TicketMsg,
+  TicketParams,
+  User
+};

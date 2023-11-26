@@ -1,7 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 
-import { SOS } from "../types";
+import { SOS } from "@/types";
+
 import { axios_ as axios } from "./axios";
 
 interface NotifyState {

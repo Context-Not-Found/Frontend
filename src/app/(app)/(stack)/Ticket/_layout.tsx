@@ -1,9 +1,9 @@
 import { Trash } from "@tamagui/lucide-icons";
 import { Stack } from "expo-router";
 
-import { TicketParams } from ".";
-import { MyHeader, PopupMenuItem } from "../../../../components";
-import { useTicketStore } from "../../../../store";
+import { MyHeader, PopupMenuItem } from "@/components";
+import { useTicketStore } from "@/store";
+import { TicketParams } from "@/types";
 
 interface RouteProps {
   name: string;

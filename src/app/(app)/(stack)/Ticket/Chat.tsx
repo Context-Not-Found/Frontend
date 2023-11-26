@@ -1,10 +1,10 @@
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect } from "react";
 
-import { ChatRoom } from "../../../../components";
-import { useWebSocket } from "../../../../hooks";
-import { useTicketStore } from "../../../../store";
-import { type TicketParams } from "./index";
+import { ChatRoom } from "@/components";
+import { useWebSocket } from "@/hooks";
+import { useTicketStore } from "@/store";
+import { type TicketParams } from "@/types";
 
 const Chat = () => {
   const { ticketMsgs, fetchTicketMsgs, setMessage, clearMsg } =

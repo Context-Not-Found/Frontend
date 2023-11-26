@@ -1,8 +1,8 @@
 import { ShieldAlert, ShieldClose } from "@tamagui/lucide-icons";
 import { Button, H6, Spacer } from "tamagui";
 
-import { MyStack } from "../../../components";
-import useSOS from "../../../hooks/useSos";
+import { MyStack } from "@/components";
+import { useSOS } from "@/hooks";
 
 const Shield = () => {
   return (

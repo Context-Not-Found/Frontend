@@ -1,6 +1,6 @@
-import { ChatRoom } from "../../../components";
-import { useWebSocket } from "../../../hooks";
-import { useChatStore, useUserStore } from "../../../store";
+import { ChatRoom } from "@/components";
+import { useWebSocket } from "@/hooks";
+import { useChatStore, useUserStore } from "@/store";
 
 const Chat = () => {
   const { messages, setMessage } = useChatStore();

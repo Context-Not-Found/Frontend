@@ -13,8 +13,8 @@ import {
 } from "react-native-gifted-chat";
 import { View } from "tamagui";
 
-import Loader from "../../components/common/Loader";
-import { useUserStore } from "../../store";
+import Loader from "@/components/common/Loader";
+import { useUserStore } from "@/store";
 
 interface ChatRoomProps {
   messages: IMessage[];

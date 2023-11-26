@@ -4,25 +4,42 @@
     "slug": "SafeHer",
     "version": "1.0.0",
     "orientation": "portrait",
+    "owner": "drish-xd",
     "scheme": "safeher",
     "userInterfaceStyle": "automatic",
     "icon": "./src/assets/icon.png",
+    "notification": { "icon": "./src/assets/icon.png" },
     "splash": {
       "backgroundColor": "#ddffe2",
       "image": "./src/assets/splash.png",
       "resizeMode": "contain"
     },
-    "extra": {
-      "eas": {
-        "projectId": "68704f08-0687-4975-b930-e66e55bc80f6"
+    "extra": { "eas": { "projectId": "68704f08-0687-4975-b930-e66e55bc80f6" } },
+    "android": {
+      "package": "com.drishxd.SafeHer",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.FOREGROUND_SERVICE"
+      ]
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app requires location access to show safety zones"
       }
     },
-    "android": {
-      "package": "com.drishxd.SafeHer"
-    }
-  },
-  "plugins": ["expo-router"],
-  "experiments": {
-    "tsconfigPaths": true
+    "plugins": [
+      "expo-router",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
+      ]
+    ],
+    "experiments": { "tsconfigPaths": true }
   }
 }

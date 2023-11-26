@@ -3,8 +3,9 @@ import { Link, router } from "expo-router";
 import React from "react";
 import { Button, ListItem, ScrollView } from "tamagui";
 
-import { MyStack } from "../../../../components";
-import { useTicketStore } from "../../../../store";
+import { MyStack } from "@/components";
+import { useTicketStore } from "@/store";
+import { TicketParams } from "@/types";
 
 const TicketList = () => {
   const { tickets } = useTicketStore();
@@ -60,8 +61,3 @@ const FloatingBtn = () => (
     onPress={() => router.push("/Ticket/Form")}
   />
 );
-
-export type TicketParams = {
-  ticketId: string;
-  userId: string;
-};

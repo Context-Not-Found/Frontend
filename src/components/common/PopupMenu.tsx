@@ -5,7 +5,7 @@ import { GestureResponderEvent } from "react-native";
 import Popover from "react-native-popover-view";
 import { Button, ListItem, Separator, YGroup } from "tamagui";
 
-import { IconProp } from "../../types";
+import { IconProp } from "@/types";
 
 export interface PopupMenuItem {
   icon: IconProp | undefined;

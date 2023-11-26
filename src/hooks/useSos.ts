@@ -1,7 +1,7 @@
 import * as Location from "expo-location";
 import { useEffect, useState } from "react";
 
-import { axios_, useUserStore } from "../store";
+import { axios_, useUserStore } from "@/store";
 
 interface SOSHook {
   location: Location.LocationObject | null;
@@ -9,7 +9,7 @@ interface SOSHook {
   handleSosBtn: () => Promise<void>;
 }
 
-const useSOS = (): SOSHook => {
+export const useSOS = (): SOSHook => {
   const [location, setLocation] = useState<Location.LocationObject | null>(
     null
   );
@@ -21,7 +21,7 @@ const useSOS = (): SOSHook => {
       const { status } = await Location.getForegroundPermissionsAsync();
 
       if (status !== "granted") {
-        alert("Please Turn on the location");
+        // alert("Please Turn on the location");
         return;
       }
 
@@ -62,5 +62,3 @@ const useSOS = (): SOSHook => {
 
   return { location, isSosOn, handleSosBtn };
 };
-
-export default useSOS;

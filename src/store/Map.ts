@@ -2,7 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LatLng } from "react-native-maps";
 import { create } from "zustand";
 
-import { Marker } from "../types";
+import { Marker } from "@/types";
+
 import { axios_ as axios } from "./axios";
 
 interface HeatmapState {

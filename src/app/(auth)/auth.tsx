@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, H1, H4, Paragraph, YStack } from "tamagui";
 
-import { LogIn, MyStack, SignUp } from "../../components";
+import { LogIn, MyStack, SignUp } from "@/components";
 
 const Auth = () => {
   const [openLogin, setOpenLogin] = useState(false);

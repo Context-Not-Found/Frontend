@@ -2,7 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IMessage } from "react-native-gifted-chat";
 import { create } from "zustand";
 
-import { Message } from "../types";
+import { Message } from "@/types";
+
 import { axios_ as axios } from "./axios";
 
 interface ChatsState {

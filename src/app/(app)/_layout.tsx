@@ -8,7 +8,7 @@ import {
   useNotificationStore,
   useTicketStore,
   useUserStore
-} from "../../store";
+} from "@/store";
 
 const AppLayout = () => {
   const { user } = useUserStore();

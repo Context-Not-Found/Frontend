@@ -2,7 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IMessage } from "react-native-gifted-chat";
 import { create } from "zustand";
 
-import { Message, Ticket, TicketMsg } from "../types";
+import { Message, Ticket, TicketMsg } from "@/types";
+
 import { useUserStore } from "./User";
 import { axios_ as axios } from "./axios";
 

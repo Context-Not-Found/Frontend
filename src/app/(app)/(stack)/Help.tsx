@@ -1,7 +1,7 @@
 import { Link } from "expo-router";
 import { Paragraph } from "tamagui";
 
-import { MyStack } from "../../../components";
+import { MyStack } from "@/components";
 
 const Help = () => {
   return (
