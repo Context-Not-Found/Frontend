@@ -52,7 +52,7 @@ export default function TabLayout() {
       <TopTabs
         screenOptions={{
           animationEnabled: true,
-          tabBarStyle: { backgroundColor: greenDark.green2 },
+          tabBarStyle: { backgroundColor: greenDark.green2, elevation: 2 },
           tabBarIndicatorStyle: { backgroundColor: greenDark.green10 },
           tabBarActiveTintColor: greenDark.green10,
           tabBarInactiveTintColor: whiteA.whiteA11

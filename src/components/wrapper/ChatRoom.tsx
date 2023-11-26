@@ -11,7 +11,7 @@ import {
   InputToolbarProps,
   Send
 } from "react-native-gifted-chat";
-import { View } from "tamagui";
+import { H6, SizableText, View } from "tamagui";
 
 import Loader from "@/components/common/Loader";
 import { useUserStore } from "@/store";
@@ -19,9 +19,16 @@ import { useUserStore } from "@/store";
 interface ChatRoomProps {
   messages: IMessage[];
   onSend: (message: IMessage[]) => void;
+  isHelp?: boolean;
+  isTyping?: boolean;
 }
 
-const ChatRoom: FC<ChatRoomProps> = ({ messages, onSend }) => {
+const ChatRoom: FC<ChatRoomProps> = ({
+  messages,
+  onSend,
+  isHelp = false,
+  isTyping = false
+}) => {
   const { user } = useUserStore();
 
   // Chat Bubble
@@ -67,6 +74,21 @@ const ChatRoom: FC<ChatRoomProps> = ({ messages, onSend }) => {
     );
   };
 
+  const renderChatEmpty = () => {
+    return (
+      <View m="$5" transform={[{ scale: -1 }]}>
+        <H6 ta="center">
+          {isHelp
+            ? "Need assistance or have questions?"
+            : "Silence can be a good sign"}
+        </H6>
+        <SizableText ta="center">
+          {isHelp ? "Ask me anything! I'm here to help" : "No messages found"}
+        </SizableText>
+      </View>
+    );
+  };
+
   // Style Links & Phone Number
   const parsePattern = () => {
     return [
@@ -85,11 +107,12 @@ const ChatRoom: FC<ChatRoomProps> = ({ messages, onSend }) => {
         renderInputToolbar={renderInputToolBar}
         parsePatterns={parsePattern}
         renderLoading={() => <Loader />}
+        renderChatEmpty={renderChatEmpty}
         scrollToBottomStyle={{ backgroundColor: greenA.greenA4 }}
         scrollToBottomComponent={() => <ArrowDown />}
         scrollToBottom={true}
-        inverted={false}
-        isTyping={true}
+        inverted={!messages.length}
+        isTyping={isTyping}
         onSend={onSend}
         renderAvatarOnTop
         alignTop

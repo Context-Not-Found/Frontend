@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router } from "expo-router";
 import { IMessage } from "react-native-gifted-chat";
 import { create } from "zustand";
 
@@ -56,9 +57,11 @@ export const useTicketStore = create<TicketState>()((set) => ({
         ...ticket,
         user_id: user?.user_id
       });
-      set((state) => ({
-        tickets: [...state.tickets, data]
-      }));
+      set((state) => {
+        const updatedTickets = { tickets: [...state.tickets, data] };
+        AsyncStorage.setItem("tickets", JSON.stringify(updatedTickets));
+        return updatedTickets;
+      });
     } catch (error) {
       console.error(error);
       throw new Error(`Error Creating ticket`);
@@ -68,12 +71,17 @@ export const useTicketStore = create<TicketState>()((set) => ({
   closeTicket: async (ticketId) => {
     try {
       await axios.patch(`/tickets/close/${ticketId}`);
+      router.back();
 
-      set((state) => ({
-        tickets: state.tickets.filter(
-          (ticket) => ticket.ticket_id !== Number(ticketId)
-        )
-      }));
+      set((state) => {
+        const updatedTickets = {
+          tickets: state.tickets.filter(
+            (ticket) => ticket.ticket_id !== Number(ticketId)
+          )
+        };
+        AsyncStorage.setItem("tickets", JSON.stringify(updatedTickets));
+        return updatedTickets;
+      });
     } catch (error) {
       console.error(error);
       throw new Error(`Error closing ticket: ${ticketId}`);

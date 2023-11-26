@@ -12,7 +12,7 @@ const MyHeader: FC<HeaderProps> = ({ title, popupMenu }) => {
       bg="$background"
       jc="space-between"
       ai="center"
-      elevation="$1"
+      elevation="$5"
     >
       <XGroup gap="$4">
         <Button scaleIcon={1.5} icon={ChevronLeft} onPress={router.back} />

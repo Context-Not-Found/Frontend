@@ -1,7 +1,7 @@
 import { Plus, Ticket } from "@tamagui/lucide-icons";
 import { Link, router } from "expo-router";
 import React from "react";
-import { Button, ListItem, ScrollView } from "tamagui";
+import { Button, H6, ListItem, ScrollView } from "tamagui";
 
 import { MyStack } from "@/components";
 import { useTicketStore } from "@/store";
@@ -14,13 +14,17 @@ const TicketList = () => {
     <>
       <ScrollView bg="$backgroundStrong">
         <MyStack>
-          {tickets.map(({ ticket_id, user_id }) => (
-            <TickitItem
-              key={ticket_id}
-              ticketId={ticket_id.toString()}
-              userId={user_id.toString()}
-            />
-          ))}
+          {tickets.length ? (
+            tickets.map(({ ticket_id, user_id }) => (
+              <TickitItem
+                key={ticket_id}
+                ticketId={ticket_id.toString()}
+                userId={user_id.toString()}
+              />
+            ))
+          ) : (
+            <H6 ta="center">No open tickets found</H6>
+          )}
         </MyStack>
       </ScrollView>
       <FloatingBtn />

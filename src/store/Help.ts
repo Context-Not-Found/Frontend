@@ -1,58 +1,42 @@
-import { useId } from "react";
 import { IMessage } from "react-native-gifted-chat";
 import { create } from "zustand";
 
 import { HelpBotMsg } from "@/types";
 
-import { useUserStore } from "./User";
 import { axios_ as axios } from "./axios";
 
 interface HelpBotState {
   messages: IMessage[];
   isTyping: boolean;
-  sendMessage: ({ message }: { message: string }) => Promise<void>;
+  sendMessage: (msg: IMessage[]) => Promise<void>;
 }
 
 export const useHelpBotStore = create<HelpBotState>()((set) => ({
   messages: [],
   isTyping: false,
 
-  sendMessage: async ({ message }) => {
-    const _id = useId();
-    const { user } = useUserStore.getState();
-
+  sendMessage: async (msg) => {
     try {
       set((state) => ({
-        messages: [
-          ...state.messages,
-          {
-            _id,
-            createdAt: new Date(),
-            text: message,
-            user: {
-              _id: user!.user_id!,
-              name: user?.name
-            }
-          }
-        ]
+        messages: [...state.messages, ...msg]
       }));
 
       set({ isTyping: true });
 
       const {
         data: { response }
-      } = await axios.post<HelpBotMsg>("/chatbot", { message });
+      } = await axios.post<HelpBotMsg>("/chatbot", { message: msg[0].text });
 
       set((state) => ({
         messages: [
           ...state.messages,
           {
-            _id,
+            _id: new Date().toTimeString(),
             createdAt: new Date(),
             text: response,
             user: {
-              _id: user!.user_id!,
-              name: user?.name
+              _id: "ChatBot",
+              name: "ChatBot"
             }
           }
         ]

@@ -1,16 +1,16 @@
-import { Link } from "expo-router";
-import { Paragraph } from "tamagui";
-
-import { MyStack } from "@/components";
+import { ChatRoom } from "@/components";
+import { useHelpBotStore } from "@/store";
 
 const Help = () => {
+  const { messages, isTyping, sendMessage } = useHelpBotStore();
+
   return (
-    <MyStack>
-      <Paragraph>Help</Paragraph>
-      <Link href={"/"} style={{ color: "#fff" }}>
-        Home
-      </Link>
-    </MyStack>
+    <ChatRoom
+      messages={messages}
+      isTyping={isTyping}
+      onSend={sendMessage}
+      isHelp
+    />
   );
 };
 
