@@ -1,10 +1,15 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import { IMessage } from "react-native-gifted-chat";
 
+import { Message } from "@/types";
+
 const BASE_WS_URL = "ws://womenprotection.onrender.com/ws";
 
-export const useWebSocket = <T>({ setMessage, url }: WebSocketHook<T>) => {
+export const useWebSocket = ({ queryKey, url }: WebSocketHook) => {
   const wsURL = BASE_WS_URL + url;
+
+  const queryClient = useQueryClient();
 
   const { current: socket } = useRef<WebSocket>(new WebSocket(wsURL));
 
@@ -14,7 +19,7 @@ export const useWebSocket = <T>({ setMessage, url }: WebSocketHook<T>) => {
       console.log(`WebSocket connected: ${url}`);
     };
 
-    // Event on closing websocket
+    // Evnt on closing websocket
     socket.onclose = () => {
       console.log("WebSocket connection closed.");
     };
@@ -26,8 +31,21 @@ export const useWebSocket = <T>({ setMessage, url }: WebSocketHook<T>) => {
 
     // Handle incoming messages
     socket.onmessage = ({ data }) => {
-      const message: T = JSON.parse(data);
-      setMessage(message);
+      const msg: Message = JSON.parse(data);
+      queryClient.setQueryData(queryKey, (oldMessage: IMessage[]) => {
+        return [
+          ...oldMessage,
+          {
+            _id: msg.message_id,
+            createdAt: msg.created_at,
+            text: msg.message_text,
+            user: {
+              _id: msg.user.user_id!,
+              name: msg.user.name
+            }
+          }
+        ];
+      });
     };
 
     return () => {
@@ -35,7 +53,7 @@ export const useWebSocket = <T>({ setMessage, url }: WebSocketHook<T>) => {
         socket.close();
       }
     };
-  }, [url, setMessage]);
+  }, [url, queryClient]);
 
   const sendMessage = (msg: IMessage[]) => {
     if (socket.readyState === WebSocket.OPEN) {
@@ -48,7 +66,7 @@ export const useWebSocket = <T>({ setMessage, url }: WebSocketHook<T>) => {
   return sendMessage;
 };
 
-interface WebSocketHook<T> {
-  setMessage: (msg: T) => void;
+interface WebSocketHook {
+  queryKey: string[];
   url: string;
 }

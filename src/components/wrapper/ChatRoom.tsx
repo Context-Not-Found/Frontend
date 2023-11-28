@@ -14,7 +14,7 @@ import {
 import { H6, SizableText, View } from "tamagui";
 
 import Loader from "@/components/common/Loader";
-import { useUserStore } from "@/store";
+import { useUser } from "@/hooks/useUser";
 
 interface ChatRoomProps {
   messages: IMessage[];
@@ -29,7 +29,7 @@ const ChatRoom: FC<ChatRoomProps> = ({
   isHelp = false,
   isTyping = false
 }) => {
-  const { user } = useUserStore();
+  const { user } = useUser();
 
   // Chat Bubble
   const renderBubble = (props: BubbleProps<IMessage>) => {

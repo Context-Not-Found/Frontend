@@ -48,15 +48,18 @@
         androidsdk = androidComposition.androidsdk;
       in
         with pkgs; {
-          devShells.default = mkShell {
-            buildInputs = [
-              androidsdk
-              jdk17
-              nodejs
-            ];
-            ANDROID_SDK_ROOT = "${androidsdk}/libexec/android-sdk";
-            LD_LIBRARY_PATH = "${pkgs.libglvnd}/lib";
-          };
+          devShells.default =
+            mkShell
+            {
+              buildInputs = [
+                androidsdk
+                jdk17
+                nodejs
+              ];
+              ANDROID_SDK_ROOT = "${androidsdk}/libexec/android-sdk";
+              LD_LIBRARY_PATH = "${pkgs.libglvnd}/lib";
+              PATH = "$PATH:$HOME/.npm-global";
+            };
         }
     );
 }

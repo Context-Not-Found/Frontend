@@ -1,9 +1,12 @@
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { useFonts } from "expo-font";
 import { Slot, SplashScreen } from "expo-router";
 import { useEffect } from "react";
 import { TamaguiProvider, Theme } from "tamagui";
 
 import { MySafeAreaView } from "@/components";
+import { UserProvider } from "@/hooks/useUser";
+import { asyncStoragePersister, queryClient } from "@/utils/queryClient";
 
 import config from "../../tamagui.config";
 
@@ -24,14 +27,21 @@ export default function RootLayout() {
   if (!loaded) return null;
 
   return (
-    <TamaguiProvider config={config}>
-      <Theme name={"dark"}>
-        <Theme name={"dark_green"}>
-          <MySafeAreaView>
-            <Slot />
-          </MySafeAreaView>
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{ persister: asyncStoragePersister }}
+    >
+      <TamaguiProvider config={config}>
+        <Theme name={"dark"}>
+          <Theme name={"dark_green"}>
+            <UserProvider>
+              <MySafeAreaView>
+                <Slot />
+              </MySafeAreaView>
+            </UserProvider>
+          </Theme>
         </Theme>
-      </Theme>
-    </TamaguiProvider>
+      </TamaguiProvider>
+    </PersistQueryClientProvider>
   );
 }

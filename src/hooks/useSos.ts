@@ -1,7 +1,10 @@
+import { useMutation } from "@tanstack/react-query";
 import * as Location from "expo-location";
 import { useEffect, useState } from "react";
 
-import { axios_, useUserStore } from "@/store";
+import { useUser } from "@/hooks/useUser";
+import { closeSOS } from "@/utils/closeSOS";
+import { createSOS } from "@/utils/createSOS";
 
 interface SOSHook {
   location: Location.LocationObject | null;
@@ -14,7 +17,21 @@ export const useSOS = (): SOSHook => {
     null
   );
   const [isSosOn, setIsSosOn] = useState<boolean>(false);
-  const { user } = useUserStore();
+  const { user } = useUser();
+
+  const { mutate: createSOSMutation, isError: creationError } = useMutation({
+    mutationFn: createSOS
+  });
+  const { mutate: closeSOSMutation, isError: closingError } = useMutation({
+    mutationFn: closeSOS
+  });
+
+  useEffect(() => {
+    // SOS is still off. There was a error while creating SOS
+    if (creationError) setIsSosOn(false);
+    // SOS is still on. There was a error while closing SOS
+    if (closingError) setIsSosOn(true);
+  }, [creationError, closingError]);
 
   useEffect(() => {
     const getLocationPermission = async () => {
@@ -38,25 +55,13 @@ export const useSOS = (): SOSHook => {
 
   const handleSosBtn = async (): Promise<void> => {
     if (!isSosOn && location) {
+      console.log("Setting SOS ON");
       setIsSosOn(true);
-
-      try {
-        await axios_.post("/sos/create", {
-          user_id: user?.user_id,
-          lat: location.coords.latitude,
-          long: location.coords.longitude
-        });
-      } catch (error) {
-        console.error("Error creating SOS:", error);
-      }
+      createSOSMutation({ user_id: user?.user_id!, location: location });
     } else if (isSosOn && location) {
+      console.log("Setting SOS OFF");
       setIsSosOn(false);
-
-      try {
-        await axios_.patch(`/sos/close/${user?.user_id}`);
-      } catch (error) {
-        console.error("Error closing SOS:", error);
-      }
+      closeSOSMutation(user?.user_id!);
     }
   };
 

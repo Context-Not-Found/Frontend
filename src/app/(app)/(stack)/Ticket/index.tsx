@@ -1,21 +1,38 @@
 import { Plus, Ticket } from "@tamagui/lucide-icons";
+import { useQuery } from "@tanstack/react-query";
 import { Link, router } from "expo-router";
 import React from "react";
 import { Button, H6, ListItem, ScrollView } from "tamagui";
 
 import { MyStack } from "@/components";
-import { useTicketStore } from "@/store";
+import { useUser } from "@/hooks/useUser";
 import { TicketParams } from "@/types";
+import { fetchTickets } from "@/utils/fetchTickets";
 
 const TicketList = () => {
-  const { tickets } = useTicketStore();
+  const { user } = useUser();
+  const {
+    data: tickets,
+    isLoading,
+    isError,
+    error
+  } = useQuery({
+    queryKey: ["tickets"],
+    queryFn: async () => await fetchTickets(user!.user_id!)
+  });
 
   return (
     <>
       <ScrollView bg="$backgroundStrong">
         <MyStack>
-          {tickets.length ? (
-            tickets.map(({ ticket_id, user_id }) => (
+          {isLoading ? (
+            <H6>Loading Tickets...</H6>
+          ) : isError ? (
+            <H6>
+              Error... {error.message} {error.cause} {error.stack}
+            </H6>
+          ) : tickets!.length ? (
+            tickets!.map(({ ticket_id, user_id }) => (
               <TickitItem
                 key={ticket_id}
                 ticketId={ticket_id.toString()}

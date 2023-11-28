@@ -1,9 +1,10 @@
 import { Trash } from "@tamagui/lucide-icons";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 
 import { MyHeader, PopupMenuItem } from "@/components";
-import { useTicketStore } from "@/store";
 import { TicketParams } from "@/types";
+import { closeTicket } from "@/utils/closeTicket";
 
 interface RouteProps {
   name: string;
@@ -11,7 +12,13 @@ interface RouteProps {
 }
 
 const TicketLayout = () => {
-  const { closeTicket } = useTicketStore();
+  const queryClient = useQueryClient();
+  const closeTicketQuery = useMutation({
+    mutationFn: closeTicket,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tickets"] });
+    }
+  });
 
   //  Custom Title for the Header
   const handleTitle = (route: RouteProps) => {
@@ -40,7 +47,7 @@ const TicketLayout = () => {
         {
           icon: Trash,
           title: "Delete",
-          onPress: () => closeTicket(params.ticketId)
+          onPress: () => closeTicketQuery.mutate(params.ticketId)
         }
       ];
     }

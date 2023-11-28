@@ -1,15 +1,16 @@
 import { Bell, HelpCircle, LogOut, Ticket } from "@tamagui/lucide-icons";
 import { greenDark, whiteA } from "@tamagui/themes";
+import { useQueryClient } from "@tanstack/react-query";
 import { router, usePathname } from "expo-router";
 import { Button, H3, XGroup, XStack } from "tamagui";
 
 import { PopupMenu, TopTabs } from "@/components";
-import { useUserStore } from "@/store";
+import { useUser } from "@/hooks/useUser";
 
 export default function TabLayout() {
   const pathname = usePathname();
-
-  const { logout } = useUserStore();
+  const queryClient = useQueryClient();
+  const { logOutUser: logout } = useUser();
 
   return (
     <>
@@ -42,7 +43,13 @@ export default function TabLayout() {
               {
                 icon: LogOut,
                 title: "LogOut",
-                onPress: logout
+                onPress: () => {
+                  // Cleat RQ Cache
+                  queryClient.clear();
+
+                  // Chnage Route and clear storage
+                  logout();
+                }
               }
             ]}
           />

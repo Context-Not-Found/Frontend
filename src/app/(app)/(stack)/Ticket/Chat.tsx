@@ -1,28 +1,25 @@
+import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
-import React, { useEffect } from "react";
+import React from "react";
 
 import { ChatRoom } from "@/components";
 import { useWebSocket } from "@/hooks";
-import { useTicketStore } from "@/store";
 import { type TicketParams } from "@/types";
+import { fetchTicketMsgs } from "@/utils/fetchTicketMessages";
 
 const Chat = () => {
-  const { ticketMsgs, fetchTicketMsgs, setMessage, clearMsg } =
-    useTicketStore();
   const { ticketId, userId } = useLocalSearchParams<TicketParams>();
-
-  useEffect(() => {
-    fetchTicketMsgs(ticketId!);
-
-    return () => clearMsg();
-  }, [ticketId]);
+  const query = useQuery({
+    queryKey: ["ticket_msgs", ticketId],
+    queryFn: async () => await fetchTicketMsgs(ticketId!)
+  });
 
   const sendMessage = useWebSocket({
-    setMessage,
+    queryKey: ["ticket_msgs", ticketId!],
     url: `/${ticketId}/${userId}`
   });
 
-  return <ChatRoom messages={ticketMsgs} onSend={sendMessage} />;
+  return <ChatRoom messages={query.data!} onSend={sendMessage} />;
 };
 
 export default Chat;
