@@ -1,10 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Location from "expo-location";
 import { useEffect, useState } from "react";
 
+import { closeSOS, createSOS, sosKeys } from "@/api/sos";
 import { useUser } from "@/hooks/useUser";
-import { closeSOS } from "@/utils/closeSOS";
-import { createSOS } from "@/utils/createSOS";
 
 interface SOSHook {
   location: Location.LocationObject | null;
@@ -19,11 +18,18 @@ export const useSOS = (): SOSHook => {
   const [isSosOn, setIsSosOn] = useState<boolean>(false);
   const { user } = useUser();
 
+  const queryClient = useQueryClient();
   const { mutate: createSOSMutation, isError: creationError } = useMutation({
-    mutationFn: createSOS
+    mutationFn: createSOS,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: sosKeys.sos(user?.user_id!) });
+    }
   });
   const { mutate: closeSOSMutation, isError: closingError } = useMutation({
-    mutationFn: closeSOS
+    mutationFn: closeSOS,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: sosKeys.sos(user?.user_id!) });
+    }
   });
 
   useEffect(() => {

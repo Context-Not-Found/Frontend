@@ -6,7 +6,7 @@ import { Message } from "@/types";
 
 const BASE_WS_URL = "ws://womenprotection.onrender.com/ws";
 
-export const useWebSocket = ({ queryKey, url }: WebSocketHook) => {
+export const useWebSocket = <T>({ queryKey, url }: WebSocketHook<T>) => {
   const wsURL = BASE_WS_URL + url;
 
   const queryClient = useQueryClient();
@@ -66,7 +66,7 @@ export const useWebSocket = ({ queryKey, url }: WebSocketHook) => {
   return sendMessage;
 };
 
-interface WebSocketHook {
-  queryKey: string[];
+interface WebSocketHook<T> {
+  queryKey: readonly T[];
   url: string;
 }

@@ -1,8 +1,11 @@
 import { IMessage } from "react-native-gifted-chat";
 
 import { Message } from "@/types";
+import { axios_ } from "@/utils/axios";
 
-import { axios_ } from "./axios";
+export const chatKeys = {
+  community_chat: ["messages"] as const
+};
 
 export async function fetchMessages(): Promise<IMessage[]> {
   try {

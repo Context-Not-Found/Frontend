@@ -4,10 +4,10 @@ import { Link, router } from "expo-router";
 import React from "react";
 import { Button, H6, ListItem, ScrollView } from "tamagui";
 
+import { fetchTickets, ticketKeys } from "@/api/ticket";
 import { MyStack } from "@/components";
 import { useUser } from "@/hooks/useUser";
 import { TicketParams } from "@/types";
-import { fetchTickets } from "@/utils/fetchTickets";
 
 const TicketList = () => {
   const { user } = useUser();
@@ -17,7 +17,7 @@ const TicketList = () => {
     isError,
     error
   } = useQuery({
-    queryKey: ["tickets"],
+    queryKey: ticketKeys.tickets(user?.user_id!),
     queryFn: async () => await fetchTickets(user!.user_id!)
   });
 

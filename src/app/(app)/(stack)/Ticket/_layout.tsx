@@ -2,9 +2,10 @@ import { Trash } from "@tamagui/lucide-icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 
+import { closeTicket, ticketKeys } from "@/api/ticket";
 import { MyHeader, PopupMenuItem } from "@/components";
+import { useUser } from "@/hooks/useUser";
 import { TicketParams } from "@/types";
-import { closeTicket } from "@/utils/closeTicket";
 
 interface RouteProps {
   name: string;
@@ -12,11 +13,14 @@ interface RouteProps {
 }
 
 const TicketLayout = () => {
+  const { user } = useUser();
   const queryClient = useQueryClient();
   const closeTicketQuery = useMutation({
     mutationFn: closeTicket,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tickets"] });
+      queryClient.invalidateQueries({
+        queryKey: ticketKeys.tickets(user?.user_id!)
+      });
     }
   });
 

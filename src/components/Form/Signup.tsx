@@ -6,9 +6,9 @@ import { router } from "expo-router";
 import React, { Dispatch, FC, SetStateAction } from "react";
 import { Button, Form, H2, XStack, YStack } from "tamagui";
 
+import { signUp } from "@/api/auth";
 import { useUser } from "@/hooks/useUser";
 import { User } from "@/types";
-import { signUp } from "@/utils/signUpUser";
 
 import MySheet from "../common/MySheet";
 

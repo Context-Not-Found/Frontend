@@ -1,17 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import { H6 } from "tamagui";
 
+import { chatKeys, fetchMessages } from "@/api/chat";
 import { ChatRoom } from "@/components";
 import { useWebSocket } from "@/hooks";
 import { useUser } from "@/hooks/useUser";
-import { fetchMessages } from "@/utils/fetchMessages";
 
 const Chat = () => {
-  const query = useQuery({ queryKey: ["messages"], queryFn: fetchMessages });
+  const query = useQuery({
+    queryKey: chatKeys.community_chat,
+    queryFn: fetchMessages
+  });
   const { user } = useUser();
 
   const sendMessage = useWebSocket({
-    queryKey: ["messages"],
+    queryKey: chatKeys.community_chat,
     url: `/community_chat/${user?.user_id}`
   });
 

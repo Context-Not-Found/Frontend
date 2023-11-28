@@ -1,8 +1,7 @@
 import { IMessage } from "react-native-gifted-chat";
 
 import { HelpBotMsg } from "@/types";
-
-import { axios_ } from "./axios";
+import { axios_ } from "@/utils/axios";
 
 export const sendBotMessage = async (msg: IMessage[]) => {
   try {

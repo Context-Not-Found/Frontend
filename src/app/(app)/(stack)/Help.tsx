@@ -2,8 +2,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { IMessage } from "react-native-gifted-chat";
 
+import { sendBotMessage } from "@/api/chatbot";
 import { ChatRoom } from "@/components";
-import { sendBotMessage } from "@/utils/sendBotMessage";
 
 const Help = () => {
   const [messages, setMessages] = useState<IMessage[]>([]);

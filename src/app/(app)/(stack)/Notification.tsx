@@ -2,17 +2,22 @@ import { Bell, BellOff } from "@tamagui/lucide-icons";
 import { useQuery } from "@tanstack/react-query";
 import { H6, ListItem, ScrollView } from "tamagui";
 
+import { fetchNotifications, sosKeys } from "@/api/sos";
 import { MyStack } from "@/components";
+import { useUser } from "@/hooks/useUser";
 import { SOS } from "@/types";
-import { fetchNotifications } from "@/utils/fetchNotifications";
 
 const Notifications = () => {
+  const { user } = useUser();
   const {
     data: notifications,
     isLoading,
     isError,
     error
-  } = useQuery({ queryKey: ["notifications"], queryFn: fetchNotifications });
+  } = useQuery({
+    queryKey: sosKeys.sos(user?.user_id!),
+    queryFn: fetchNotifications
+  });
   return (
     <ScrollView bg="$backgroundStrong">
       <MyStack>

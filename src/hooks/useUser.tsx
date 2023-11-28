@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -12,8 +11,8 @@ interface UserContextType {
 }
 const UserContext = createContext<UserContextType>({
   user: null,
-  updateUser: async () => {},
-  logOutUser: async () => {}
+  updateUser: async () => { },
+  logOutUser: async () => { }
 });
 
 // Custom hook to access the user context
@@ -53,6 +52,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const logOutUser = async () => {
     try {
       console.log("Removing User");
+      setUser(null);
       // Clear Local Storage
       await AsyncStorage.removeItem("user");
       // Replace route to /Auth

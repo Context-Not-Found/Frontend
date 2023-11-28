@@ -2,11 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { Heatmap } from "react-native-maps";
 import { H2, H6, Sheet, Text } from "tamagui";
 
+import { areasKeys, fetchAreas } from "@/api/areas";
 import { MapWrapper, MyStack } from "@/components";
-import { fetchAreas } from "@/utils/fetchAreas";
 
 const MyHeatmap = () => {
-  const query = useQuery({ queryKey: ["heatMap"], queryFn: fetchAreas });
+  const query = useQuery({ queryKey: areasKeys.heatmap, queryFn: fetchAreas });
 
   return (
     <>

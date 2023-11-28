@@ -1,8 +1,11 @@
 import { LatLng } from "react-native-maps";
 
 import { Marker } from "@/types";
+import { axios_ as axios } from "@/utils/axios";
 
-import { axios_ as axios } from "./axios";
+export const areasKeys = {
+  heatmap: ["heatMap"] as const
+};
 
 export async function fetchAreas(): Promise<LatLng[]> {
   try {
